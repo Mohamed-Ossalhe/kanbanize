@@ -10,8 +10,8 @@ class View {
     }
 
     public function render() {
-        if(file_exists(VIEW . $this->view_file . '.view.php')) {
-            require_once VIEW . $this->view_file . '.view.php';
+        if(file_exists(VIEW . $this->view_file . '.php')) {
+            require_once VIEW . $this->view_file . '.php';
         }
     }
 }
