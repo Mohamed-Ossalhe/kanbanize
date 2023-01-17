@@ -2,14 +2,21 @@
     "env": {
         "browser": true,
         "commonjs": true,
-        "es2021": true
+        "es2021": true,
+        "jquery": true
     },
-    "extends": "eslint:recommended",
+    "extends": [
+        "eslint:recommended",
+        "plugin:jquery/slim"
+    ],
     "overrides": [
     ],
     "parserOptions": {
         "ecmaVersion": "latest"
     },
+    "plugins": [
+        "jquery"
+    ],
     "rules": {
         "indent": [
             "error",

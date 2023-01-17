@@ -1,0 +1,34 @@
+.task-text-description p {
+    --max-line: 3;
+    --line-height: 1.4;
+    max-height: calc(var(--max-line) * 1em * var(--line-height));
+    line-height: var(--line-height);
+    overflow: hidden;
+    position: relative;
+}
+
+.task-text-description p:has(+.expnd-btn:not(:checked)):before {
+    content: "";
+    position: absolute;
+    height: calc(1em * var(--line-height));
+    width: 100%;
+    bottom: 0;
+    pointer-events: none;
+    background: linear-gradient(to bottom, transparent, #4D63EE);
+}
+
+.expnd-btn {
+    appearance: none;
+}
+
+.expnd-btn::before {
+    content: "See More";
+}
+
+.expnd-btn:checked::before {
+    content: "See Less";
+}
+
+.task-text-description p:has(+ .expnd-btn:checked) {
+    max-height: none;
+}
