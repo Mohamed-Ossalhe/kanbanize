@@ -1,2 +1,2 @@
-# YouBoard
-### YouBoard project to manage and organize tasks.
+# Kanbanize
+### Kanbanize project to manage and organize tasks.
