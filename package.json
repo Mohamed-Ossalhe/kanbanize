@@ -32,9 +32,11 @@
   "homepage": "https://github.com/Mohamed-Ossalhe/YouBoard#readme",
   "devDependencies": {
     "eslint": "^8.32.0",
+    "eslint-plugin-jquery": "^1.5.1",
     "tailwindcss": "^3.2.4"
   },
   "dependencies": {
-    "eslint-config-airbnb-base": "^15.0.0"
+    "eslint-config-airbnb-base": "^15.0.0",
+    "tailwind-scrollbar-hide": "^1.1.7"
   }
 }
