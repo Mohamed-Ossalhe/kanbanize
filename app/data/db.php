@@ -3,7 +3,7 @@ class DB {
     private $host = 'localhost';
     private $username = 'root';
     private $password = '';
-    private $dbname = ''; // Database Name
+    private $dbname = 'kanbanize'; // Database Name
 
     protected function connect(){
         try {
@@ -18,3 +18,4 @@ class DB {
             }
     }
 }
+?>
