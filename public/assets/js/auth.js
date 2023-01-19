@@ -58,4 +58,14 @@ $(document).ready(function () {
             }
         });
     });
+
+    // switch between login form and sign up form
+    $(".switch-sign").click(function() {
+        $(".sign-up-form").removeClass("hidden");
+        $(".log-in-form").addClass("hidden");
+    });
+    $(".switch-log").click(function(){
+        $(".log-in-form").removeClass("hidden");
+        $(".sign-up-form").addClass("hidden");
+    });
 });

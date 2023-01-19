@@ -6,8 +6,12 @@
         }
         // authentification view page
         public function authentification() {
-            $this->view("home/authentification", "Authentification | Kanbanize");
-            $this->view->render();
+            if(!isUserLogged()) {
+                $this->view("home/authentification", "Authentification | Kanbanize");
+                $this->view->render();
+            }else {
+                redirect("home/");
+            }
         }
         // Sign up
         public function signUp() {
@@ -49,7 +53,7 @@
         // log out
         public function logOut() {
             if(session_destroy()) {
-                header("location: " . $this->authentification());
+                redirect("user/authentification");
             }
         }
         // validate inputs and remove special characters
