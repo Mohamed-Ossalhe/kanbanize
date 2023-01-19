@@ -6,7 +6,7 @@
         }
         // home/app
         public function home() {
-            if(isset($_SESSION["user-logged"])) {
+            if(isUserLogged()) {
                 $this->view('home/home', 'TaskBoard Project | Kanbanize');
                 $this->view->render();
             }else {
@@ -17,9 +17,33 @@
         
 
         // operations
+        // add new column
+        public function addColumn() {
+            extract($_POST);
+            if(!empty($_POST["columnTitle"]) && isset($_SESSION["user-id"])) {
+                $data = array(
+                    "column-title" => $this->validateData($columnTitle),
+                    "column-user" => $_SESSION["user-id"]
+                );
+                $this->model("Column");
+                $this->model->insertData($data);
+            }else {
+                echo "Please Fill The Field!";
+            }
+        }
+        // get users column
+        public function getAllUserColumns() {
+            $data = array(
+                "user-id" => $_SESSION["user-id"]
+            );
+            $this->model("Column");
+            $columns = $this->model->getAllData($data);
+            echo json_encode($columns);
+        }
+        // add new task
         public function addTask() {
             extract($_POST);
-            if(isset($_POST["task_title"]) && isset($_POST["task_description"]) && isset($_POST["end_date"])){
+            if(!empty($_POST["task_title"]) && !empty($_POST["task_description"]) && !empty($_POST["end_date"])){
                 $data = array(
                     "task-title" => $task_title,
                     "task-desc" => $task_description,
@@ -29,6 +53,8 @@
                 var_dump($data);
                 $this->model("Task");
                 $this->model->insertData($data);
+            }else {
+                echo "Please Fill All The Fields!";
             }
         }
 

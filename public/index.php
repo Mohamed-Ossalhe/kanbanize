@@ -13,7 +13,9 @@ define('CORE', ROOT . 'app' . DIRECTORY_SEPARATOR . 'core' . DIRECTORY_SEPARATOR
 define('CONTROLLER', ROOT . 'app' . DIRECTORY_SEPARATOR . 'controller' . DIRECTORY_SEPARATOR);
 define('BASE_URL','http://localhost/task-board/');
 define('BASE_ASSETS_URL','http://localhost/task-board/public/assets/');
-$modules = [ROOT, APP, CORE, CONTROLLER, DATA, MODEL, HELPERS, URL_HELPER, SESSION_HELPER];
+$modules = [ROOT, APP, CORE, CONTROLLER, DATA, MODEL, HELPERS];
+require_once URL_HELPER;
+require_once SESSION_HELPER;
 set_include_path(get_include_path() . PATH_SEPARATOR . implode(PATH_SEPARATOR, $modules));
 spl_autoload_register('spl_autoload');
 new App();

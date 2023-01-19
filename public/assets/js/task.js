@@ -19,7 +19,6 @@ $(document).ready(function (){
                     $("#task-title").val("");
                     $("#task-description").val("");
                     $("#date-picker").val("");
-                    $("add-task-modal").hide(); // eslint-disable-line jquery/no-hide
                     console.log(responce);
                 }
             },
