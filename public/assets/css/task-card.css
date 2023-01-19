@@ -1,3 +1,8 @@
+.tasks-column {
+    min-width: 25rem;
+    max-width: 25rem;
+}
+
 .task-text-description p {
     --max-line: 3;
     --line-height: 1.4;
