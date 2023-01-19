@@ -19,12 +19,24 @@
 
 .expnd-btn {
     appearance: none;
+    height: 0;
+    width: 4rem !important;
+    color: white !important;
+    background-color: transparent !important;
+    border: none;
+    vertical-align: unset;
 }
 
 .expnd-btn::before {
     content: "See More";
 }
 
+input[type="checkbox"]:checked {
+    background-image: none;
+}
+input[type="checkbox"]:focus {
+    outline: none !important;
+}
 .expnd-btn:checked::before {
     content: "See Less";
 }

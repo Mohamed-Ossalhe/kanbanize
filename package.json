@@ -1,7 +1,7 @@
 {
-  "name": "task-board",
+  "name": "kanbanize",
   "version": "1.0.0",
-  "description": "YouBoard is a kanban board - task managment system helps to organize and manages tasks",
+  "description": "kanbanize is a kanban board - task managment system helps to organize and manages tasks",
   "main": "index.js",
   "scripts": {
     "build:watch": "npx tailwindcss -i public/assets/css/tailwindcss.css -o public/assets/css/core.css --watch",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Mohamed-Ossalhe/YouBoard.git"
+    "url": "git+https://github.com/Mohamed-Ossalhe/kanbanize.git"
   },
   "keywords": [
     "task",
@@ -27,9 +27,9 @@
   "author": "Mohamed Ossalhe",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Mohamed-Ossalhe/YouBoard/issues"
+    "url": "https://github.com/Mohamed-Ossalhe/kanbanize/issues"
   },
-  "homepage": "https://github.com/Mohamed-Ossalhe/YouBoard#readme",
+  "homepage": "https://github.com/Mohamed-Ossalhe/kanbanize#readme",
   "devDependencies": {
     "eslint": "^8.32.0",
     "eslint-plugin-jquery": "^1.5.1",
@@ -37,6 +37,7 @@
   },
   "dependencies": {
     "eslint-config-airbnb-base": "^15.0.0",
+    "flowbite": "^1.6.2",
     "tailwind-scrollbar-hide": "^1.1.7"
   }
 }
