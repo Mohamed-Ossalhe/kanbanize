@@ -43,12 +43,13 @@
         // add new task
         public function addTask() {
             extract($_POST);
-            if(!empty($_POST["task_title"]) && !empty($_POST["task_description"]) && !empty($_POST["end_date"])){
+            if(!empty($_POST["task_title"]) && !empty($_POST["task_description"]) && !empty($_POST["end_date"]) && !empty($_POST["column_id"])){
                 $data = array(
                     "task-title" => $task_title,
                     "task-desc" => $task_description,
                     "task-status" => "to do",
-                    "task-date" => $end_date
+                    "task-date" => $end_date,
+                    "column-id" => $column_id
                 );
                 var_dump($data);
                 $this->model("Task");
