@@ -45,11 +45,12 @@
             extract($_POST);
             if(!empty($_POST["task_title"]) && !empty($_POST["task_description"]) && !empty($_POST["end_date"]) && !empty($_POST["column_id"])){
                 $data = array(
-                    "task-title" => $task_title,
-                    "task-desc" => $task_description,
-                    "task-status" => "to do",
-                    "task-date" => $end_date,
-                    "column-id" => $column_id
+                    "task-title" => $this->validateData($task_title),
+                    "task-desc" => $this->validateData($task_description),
+                    // "task-status" => "to do",
+                    "task-date" => $this->validateData($end_date),
+                    "column-id" => $this->validateData($column_id),
+                    "user-id" => $_SESSION["user-id"]
                 );
                 var_dump($data);
                 $this->model("Task");
@@ -57,6 +58,15 @@
             }else {
                 echo "Please Fill All The Fields!";
             }
+        }
+        // get all tasks related to the specified column
+        public function getAllUserTasks() {
+            $data = array(
+                "user-id" => $_SESSION["user-id"]
+            );
+            $this->model("Task");
+            $tasks = $this->model->getAllData($data);
+            echo json_encode($tasks);
         }
 
         // validate inputs and remove special characters
