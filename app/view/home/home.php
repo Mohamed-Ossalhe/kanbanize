@@ -50,12 +50,35 @@
         <div class="container mx-auto h-full">
             <!-- tasks wrapper -->
             <div class="tasks-wrapper flex items-start gap-6 px-2 max-h-full">
-                <!-- add column button -->
-                <div class="tasks-column max-h-full">
-                    <!-- Modal toggle -->
-                    <button data-modal-target="column-modal" data-modal-toggle="column-modal" class="add-new-list w-full py-3 my-3 border-b-2 border-third px-4 md:py-2 md:px-2 bg-white text-xl md:text-base capitalize hover:bg-secondary hover:rounded hover:border-b-secondary hover:text-white  transition-colors" type="button">
-                            <i class="bx bx-plus mr-4"></i>add new list
-                    </button>
+                <!-- todo column -->
+                <div class="tasks-column columns max-h-full" id="to-do">
+                    <!-- task column header -->
+                    <div class="task-column-header capitalize border-b-2 border-third py-2 my-3">
+                        <h3>to do</h3>
+                    </div>
+                    <!-- task column wrapper -->
+                    <div class="tasks-column-wrapper scrollbar-hide flex flex-col gap-2  max-h-[400px] overflow-y-scroll">
+                    </div>
+                </div>
+                <!-- in progress column -->
+                <div class="tasks-column columns max-h-full" id="in-progress">
+                    <!-- task column header -->
+                    <div class="task-column-header capitalize border-b-2 border-third py-2 my-3">
+                        <h3>in progress</h3>
+                    </div>
+                    <!-- task column wrapper -->
+                    <div class="tasks-column-wrapper scrollbar-hide flex flex-col gap-2  max-h-[400px] overflow-y-scroll">
+                    </div>
+                </div>
+                <!-- done column -->
+                <div class="tasks-column columns max-h-full" id="done">
+                    <!-- task column header -->
+                    <div class="task-column-header capitalize border-b-2 border-third py-2 my-3">
+                        <h3>done</h3>
+                    </div>
+                    <!-- task column wrapper -->
+                    <div class="tasks-column-wrapper scrollbar-hide flex flex-col gap-2  max-h-[400px] overflow-y-scroll">
+                    </div>
                 </div>
             </div>
         </div>
@@ -85,7 +108,9 @@
                     <div>
                         <label for="lists" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option</label>
                         <select id="lists" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            
+                            <option value="to do">To Do</option>
+                            <option value="in progress">In Progress</option>
+                            <option value="done">Done</option>
                         </select>
                     </div>
                     <div>
@@ -100,32 +125,6 @@
                     <div class="flex justify-between gap-4">
                         <input type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center" value="Add Task">
                         <button type="button" data-modal-hide="task-modal" class="w-full text-white bg-red-700 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Cancel</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Add Column Form Modal -->
-<div id="column-modal" tabindex="-1" aria-hidden="true" class="add-column-modal fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
-    <div class="relative w-full h-full max-w-md md:h-auto">
-        <!-- Modal content -->
-        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-            <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-hide="column-modal">
-                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                <span class="sr-only">Close modal</span>
-            </button>
-            <div class="px-6 py-6 lg:px-8">
-                <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Add New List</h3>
-                <form class="add-column-form space-y-6" method="post">
-                    <div>
-                        <label for="column-title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">List Title</label>
-                        <input type="text" name="column-title" id="column-title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Task Title">
-                        <p class="message mt-2 text-sm text-red-600 dark:text-red-500"></p>
-                    </div>
-                    <div class="flex justify-between gap-4">
-                        <input type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center" value="Add List">
-                        <button type="button" data-modal-hide="column-modal" class="w-full text-white bg-red-700 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Cancel</button>
                     </div>
                 </form>
             </div>
