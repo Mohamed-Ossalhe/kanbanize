@@ -1077,6 +1077,10 @@ input:checked + .toggle-bg {
   bottom: 0px;
 }
 
+.top-20 {
+  top: 5rem;
+}
+
 .z-50 {
   z-index: 50;
 }
@@ -1151,6 +1155,10 @@ input:checked + .toggle-bg {
 
 .mb-1 {
   margin-bottom: 0.25rem;
+}
+
+.ml-3 {
+  margin-left: 0.75rem;
 }
 
 .block {
@@ -1262,40 +1270,8 @@ input:checked + .toggle-bg {
   width: 16rem;
 }
 
-.w-\[\] {
-  width: ;
-}
-
-.w-\[180rem\] {
-  width: 180rem;
-}
-
-.w-96 {
-  width: 24rem;
-}
-
 .max-w-md {
   max-width: 28rem;
-}
-
-.max-w-\[360px\] {
-  max-width: 360px;
-}
-
-.max-w-screen-lg {
-  max-width: 1024px;
-}
-
-.max-w-\[\] {
-  max-width: ;
-}
-
-.max-w-\[190rem\] {
-  max-width: 190rem;
-}
-
-.max-w-\[190px\] {
-  max-width: 190px;
 }
 
 .flex-1 {
@@ -2218,6 +2194,10 @@ input:checked + .toggle-bg {
 }
 
 @media (min-width: 768px) {
+  .md\:static {
+    position: static;
+  }
+
   .md\:inset-0 {
     top: 0px;
     right: 0px;
@@ -2227,6 +2207,14 @@ input:checked + .toggle-bg {
 
   .md\:mr-0 {
     margin-right: 0px;
+  }
+
+  .md\:block {
+    display: block;
+  }
+
+  .md\:hidden {
+    display: none;
   }
 
   .md\:h-full {
@@ -2265,8 +2253,16 @@ input:checked + .toggle-bg {
     overflow-x: hidden;
   }
 
+  .md\:bg-transparent {
+    background-color: transparent;
+  }
+
   .md\:p-2 {
     padding: 0.5rem;
+  }
+
+  .md\:p-0 {
+    padding: 0px;
   }
 
   .md\:py-2 {

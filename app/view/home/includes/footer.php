@@ -4,6 +4,8 @@
 <script src="<?=BASE_URL?>node_modules/flowbite/dist/datepicker.js"></script>
 <!-- jquery library -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<!-- Ajax for search form script -->
+<script src="<?=BASE_ASSETS_URL?>js/search.js"></script>
 <!-- Ajax for task adding script -->
 <script src="<?=BASE_ASSETS_URL?>js/task.js"></script>
 <!-- Ajax for column adding script -->

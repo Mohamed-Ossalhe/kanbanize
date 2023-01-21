@@ -28,6 +28,7 @@ $(document).ready(function (){
     // get all user column
     function getAllUserLists() {
         let column = "";
+        let selectOption = "";
         $.ajax({ // eslint-disable-line jquery/no-ajax
             url: "http://localhost/task-board/public/home/getAllUserColumns",
             type: "get",
@@ -40,18 +41,19 @@ $(document).ready(function (){
                     dataParsed.forEach((element) => {
                         // console.log(element.task_col_id);
                         column += `
-                        <div class="tasks-column max-h-full" id="${element.task_col_id}">
+                        <div class="tasks-column columns max-h-full" id="${element.task_col_id}">
                             <!-- task column header -->
                             <div class="task-column-header capitalize border-b-2 border-third py-2 my-3">
                                 <h3>${element.task_col_name}</h3>
                             </div>
                             <!-- task column wrapper -->
                             <div class="tasks-column-wrapper scrollbar-hide flex flex-col gap-2  max-h-[400px] overflow-y-scroll">
-                                
                             </div>
                         </div>`;
+                        selectOption += `<option value="${element.task_col_id}" class="capitalize">${element.task_col_name}</option>`;
                     });
                 }
+                $("#lists").prepend(selectOption);
                 $(".tasks-wrapper").prepend(column);
             },
             error: (error) => {

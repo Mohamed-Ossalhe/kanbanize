@@ -11,17 +11,23 @@
             <div class="nav-links-wrapper flex items-center justify-between gap-3">
                 <!-- search form wrapper -->
                 <div class="search-form-wrapper">
-                    <div class="search-icon text-4xl md:text-2xl text-white cursor-pointer">
+                    <div class="search-icon md:hidden text-4xl md:text-2xl text-white cursor-pointer">
                         <i class='bx bx-search'></i>
                     </div>
-                    <div class="search-form hidden">
-                        <form method="post">
-                            <input type="search" name="search" id="search">
+                    <div class="search-form absolute w-full bg-white p-4 top-20 left-0 md:static md:bg-transparent md:p-0 hidden md:block">
+                        <form class="flex items-center">   
+                            <label for="simple-search" class="sr-only">Search</label>
+                            <div class="relative w-full">
+                                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                    <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
+                                </div>
+                                <input type="text" id="simple-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search" required>
+                            </div>
                         </form>
                     </div>
                 </div>
                 <!-- account links -->
-                <div class="account-links">
+                <div class="account-links ml-3">
                     <!-- <div class="account-profile-img w-10 h-10 md:w-8 md:h-8 bg-white text-lg md:text-base font-semibold rounded-full flex items-center justify-center cursor-pointer">O</div> -->
                     <!-- profile -->
                     <button id="dropdownAvatarNameButton" data-dropdown-toggle="dropdownAvatarName" class="flex items-center text-sm font-medium text-white rounded-full hover:text-primary md:mr-0" type="button">
@@ -38,13 +44,7 @@
                         </div>
                         <ul class="py-1 text-sm text-gray-700" aria-labelledby="dropdownInformdropdownAvatarNameButtonationButton">
                             <li>
-                                <a href="#" class="block px-4 py-2 hover:bg-gray-100">Dashboard</a>
-                            </li>
-                            <li>
-                                <a href="#" class="block px-4 py-2 hover:bg-gray-100">Settings</a>
-                            </li>
-                            <li>
-                                <a href="#" class="block px-4 py-2 hover:bg-gray-100">Earnings</a>
+                                <a href="#" class="block px-4 py-2 hover:bg-gray-100">Profile</a>
                             </li>
                         </ul>
                         <div class="py-1">

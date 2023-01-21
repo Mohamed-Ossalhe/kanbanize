@@ -50,130 +50,6 @@
         <div class="container mx-auto h-full">
             <!-- tasks wrapper -->
             <div class="tasks-wrapper flex items-start gap-6 px-2 max-h-full">
-                <!-- tasks column -->
-                <div class="tasks-column max-h-full hidden">
-                    <!-- task column header -->
-                    <div class="task-column-header capitalize border-b-2 border-third py-2 my-3">
-                        <h3>to do</h3>
-                    </div>
-                    <!-- task column wrapper -->
-                    <div class="tasks-column scrollbar-hide flex flex-col gap-2  max-h-[400px] overflow-y-scroll">
-                        <!-- task card -->
-                        <div class="task-box w-full rounded bg-primary text-white">
-                            <!-- task header -->
-                            <div class="task-header flex items-center justify-between py-2 px-2 bg-fourth text-black text-xl md:text-base rounded-t-md">
-                                <h2 class="task-title">task title</h2>
-                                <div class="task-operations flex items-center gap-2">
-                                    <!-- update button -->
-                                    <div class="edit-btn flex items-center justify-center bg-[#EAEDFF] text-primary w-8 h-8 cursor-pointer rounded">
-                                        <i class='bx bx-edit'></i>
-                                    </div>
-                                    <!-- delete button -->
-                                    <div class="delete-btn flex items-center justify-center bg-[#EAEDFF] text-[#FF5656] w-8 h-8 cursor-pointer rounded">
-                                        <i class='bx bx-trash-alt'></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- task body -->
-                            <div class="task-body p-2">
-                                <!-- task description -->
-                                <div class="task-text-description text-lg md:text-sm">
-                                    <p>
-                                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aliquid, recusandae. Possimus sunt porro quas beatae dolorum natus? Id dicta veritatis fugiat quae voluptas culpa beatae aperiam voluptatibus minus qui, ullam repellat enim soluta! Necessitatibus ea sit sequi iusto nobis eligendi tempore rerum. Rem laboriosam, facere saepe eos voluptate velit tenetur reprehenderit molestias, veritatis dolores adipisci explicabo, est fuga! Sunt aliquam reprehenderit quaerat totam perferendis, officiis natus saepe eos ab repellat?
-                                    </p>
-                                    <input class="expnd-btn underline w-8 text-white bg-transparent border-none" type="checkbox" name="expnd-btn">
-                                </div>
-                                <!-- task start date and end date -->
-                                <div class="task-date flex items-center justify-between text-base md:text-sm mt-4">
-                                    <!-- start date -->
-                                    <div class="start-date">
-                                        <p>Created in 16/01/2023</p>
-                                    </div>
-                                    <!-- end date -->
-                                    <div class="end-date">
-                                        <p>Due in 17/01/2023</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- task card -->
-                        <div class="task-box w-full rounded bg-primary text-white">
-                            <!-- task header -->
-                            <div class="task-header flex items-center justify-between py-2 px-2 bg-fourth text-black text-xl md:text-base rounded-t-md">
-                                <h2 class="task-title">task title</h2>
-                                <div class="task-operations flex items-center gap-2">
-                                    <!-- update button -->
-                                    <div class="edit-btn flex items-center justify-center bg-[#EAEDFF] text-primary w-8 h-8 cursor-pointer rounded">
-                                        <i class='bx bx-edit'></i>
-                                    </div>
-                                    <!-- delete button -->
-                                    <div class="delete-btn flex items-center justify-center bg-[#EAEDFF] text-[#FF5656] w-8 h-8 cursor-pointer rounded">
-                                        <i class='bx bx-trash-alt'></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- task body -->
-                            <div class="task-body p-2">
-                                <!-- task description -->
-                                <div class="task-text-description text-lg md:text-sm">
-                                    <p>
-                                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aliquid, recusandae. Possimus sunt porro quas beatae dolorum natus? Id dicta veritatis fugiat quae voluptas culpa beatae aperiam voluptatibus minus qui, ullam repellat enim soluta! Necessitatibus ea sit sequi iusto nobis eligendi tempore rerum. Rem laboriosam, facere saepe eos voluptate velit tenetur reprehenderit molestias, veritatis dolores adipisci explicabo, est fuga! Sunt aliquam reprehenderit quaerat totam perferendis, officiis natus saepe eos ab repellat?
-                                    </p>
-                                    <input class="expnd-btn underline w-8 text-white bg-transparent border-none" type="checkbox" name="expnd-btn">
-                                </div>
-                                <!-- task start date and end date -->
-                                <div class="task-date flex items-center justify-between text-base md:text-sm mt-4">
-                                    <!-- start date -->
-                                    <div class="start-date">
-                                        <p>Created in 16/01/2023</p>
-                                    </div>
-                                    <!-- end date -->
-                                    <div class="end-date">
-                                        <p>Due in 17/01/2023</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- task card -->
-                        <div class="task-box w-full rounded bg-primary text-white">
-                            <!-- task header -->
-                            <div class="task-header flex items-center justify-between py-2 px-2 bg-fourth text-black text-xl md:text-base rounded-t-md">
-                                <h2 class="task-title">task title</h2>
-                                <div class="task-operations flex items-center gap-2">
-                                    <!-- update button -->
-                                    <div class="edit-btn flex items-center justify-center bg-[#EAEDFF] text-primary w-8 h-8 cursor-pointer rounded">
-                                        <i class='bx bx-edit'></i>
-                                    </div>
-                                    <!-- delete button -->
-                                    <div class="delete-btn flex items-center justify-center bg-[#EAEDFF] text-[#FF5656] w-8 h-8 cursor-pointer rounded">
-                                        <i class='bx bx-trash-alt'></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- task body -->
-                            <div class="task-body p-2">
-                                <!-- task description -->
-                                <div class="task-text-description text-lg md:text-sm">
-                                    <p>
-                                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aliquid, recusandae. Possimus sunt porro quas beatae dolorum natus? Id dicta veritatis fugiat quae voluptas culpa beatae aperiam voluptatibus minus qui, ullam repellat enim soluta! Necessitatibus ea sit sequi iusto nobis eligendi tempore rerum. Rem laboriosam, facere saepe eos voluptate velit tenetur reprehenderit molestias, veritatis dolores adipisci explicabo, est fuga! Sunt aliquam reprehenderit quaerat totam perferendis, officiis natus saepe eos ab repellat?
-                                    </p>
-                                    <input class="expnd-btn underline" type="checkbox" name="expnd-btn">
-                                </div>
-                                <!-- task start date and end date -->
-                                <div class="task-date flex items-center justify-between text-base md:text-sm mt-4">
-                                    <!-- start date -->
-                                    <div class="start-date">
-                                        <p>Created in 16/01/2023</p>
-                                    </div>
-                                    <!-- end date -->
-                                    <div class="end-date">
-                                        <p>Due in 17/01/2023</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <!-- add column button -->
                 <div class="tasks-column max-h-full">
                     <!-- Modal toggle -->
@@ -205,6 +81,12 @@
                     <div>
                         <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Task Description</label>
                         <textarea id="task-description" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your task description here..."></textarea>
+                    </div>
+                    <div>
+                        <label for="lists" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option</label>
+                        <select id="lists" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            
+                        </select>
                     </div>
                     <div>
                         <label for="date-picker" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Due Date</label>

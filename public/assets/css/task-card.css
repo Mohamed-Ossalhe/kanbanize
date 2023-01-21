@@ -1,6 +1,13 @@
 .tasks-column {
-    min-width: 25rem;
-    max-width: 25rem;
+    min-width: 22rem;
+    max-width: 22rem;
+}
+
+@media (min-width: 480px) {
+    .tasks-column {
+        min-width: 25rem;
+        max-width: 25rem;
+    }
 }
 
 .task-text-description p {
