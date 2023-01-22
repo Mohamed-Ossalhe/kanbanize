@@ -61,6 +61,21 @@
                 return $e->getMessage();
             }
         }
+        // update one row
+        public function updateRow($data) {
+            try {
+                $stmt = $this->connect()->prepare("UPDATE `tasks` SET task_title = :title,task_description = :description,date_end = :date_end,user_id = :user_id,task_status = :status WHERE task_id = :id");
+                $stmt->bindParam("title", $data["task-title"]);
+                $stmt->bindParam("description", $data["task-desc"]);
+                $stmt->bindParam("date_end", $data["task-date"]);
+                $stmt->bindParam("user_id", $data["user-id"]);
+                $stmt->bindParam("status", $data["task-status"]);
+                $stmt->bindParam("id", $data["task-id"]);
+                $stmt->execute();
+            }catch (PDOException $e) {
+                return $e->getMessage();
+            }
+        }
         // delete one row of data
         public function deleteRow($id) {
             try{

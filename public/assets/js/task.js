@@ -49,18 +49,18 @@ $(document).ready(function (){
             type: "get",
             success: (response) => {
                 let dataParsed = $.parseJSON(response);
+                $(".todo-count").text(dataParsed.length);
                 if(dataParsed.length > 0) {
                     dataParsed.forEach((element) => {
                         task += `<div class="task-box w-full rounded bg-primary text-white" id="${element.task_id}">
                             <!-- task header -->
                             <div class="task-header flex items-center justify-between py-2 px-2 bg-fourth text-black text-xl md:text-base rounded-t-md">
-                                <p id="task-status" class="hidden">${element.task_status}</p>
                                 <h2 class="task-title">${element.task_title}</h2>
                                 <div class="task-operations flex items-center gap-2">
                                     <!-- update button -->
-                                    <div class="edit-btn flex items-center justify-center bg-[#EAEDFF] text-primary w-8 h-8 cursor-pointer rounded">
+                                    <button class="edit-btn flex items-center justify-center bg-[#EAEDFF] text-primary w-8 h-8 cursor-pointer rounded" type="button">
                                         <i class='bx bx-edit'></i>
-                                    </div>
+                                    </button>
                                     <!-- delete button -->
                                     <div class="delete-btn flex items-center justify-center bg-[#EAEDFF] text-[#FF5656] w-8 h-8 cursor-pointer rounded">
                                         <i class='bx bx-trash-alt'></i>
@@ -108,18 +108,18 @@ $(document).ready(function (){
             type: "get",
             success: (response) => {
                 let dataParsed = $.parseJSON(response);
+                $(".in-progress-count").text(dataParsed.length);
                 if(dataParsed.length > 0) {
                     dataParsed.forEach((element) => {
                         task += `<div class="task-box w-full rounded bg-primary text-white" id="${element.task_id}">
                             <!-- task header -->
                             <div class="task-header flex items-center justify-between py-2 px-2 bg-fourth text-black text-xl md:text-base rounded-t-md">
-                                <p id="task-status" class="hidden">${element.task_status}</p>
                                 <h2 class="task-title">${element.task_title}</h2>
                                 <div class="task-operations flex items-center gap-2">
                                     <!-- update button -->
-                                    <div class="edit-btn flex items-center justify-center bg-[#EAEDFF] text-primary w-8 h-8 cursor-pointer rounded">
+                                    <button class="edit-btn flex items-center justify-center bg-[#EAEDFF] text-primary w-8 h-8 cursor-pointer rounded" type="button">
                                         <i class='bx bx-edit'></i>
-                                    </div>
+                                    </button>
                                     <!-- delete button -->
                                     <div class="delete-btn flex items-center justify-center bg-[#EAEDFF] text-[#FF5656] w-8 h-8 cursor-pointer rounded">
                                         <i class='bx bx-trash-alt'></i>
@@ -167,18 +167,18 @@ $(document).ready(function (){
             type: "get",
             success: (response) => {
                 let dataParsed = $.parseJSON(response);
+                $(".done-count").text(dataParsed.length);
                 if(dataParsed.length > 0) {
                     dataParsed.forEach((element) => {
                         task += `<div class="task-box w-full rounded bg-primary text-white" id="${element.task_id}">
                             <!-- task header -->
                             <div class="task-header flex items-center justify-between py-2 px-2 bg-fourth text-black text-xl md:text-base rounded-t-md">
-                                <p id="task-status" class="hidden">${element.task_status}</p>
                                 <h2 class="task-title">${element.task_title}</h2>
                                 <div class="task-operations flex items-center gap-2">
                                     <!-- update button -->
-                                    <div class="edit-btn flex items-center justify-center bg-[#EAEDFF] text-primary w-8 h-8 cursor-pointer rounded">
+                                    <button class="edit-btn flex items-center justify-center bg-[#EAEDFF] text-primary w-8 h-8 cursor-pointer rounded" type="button">
                                         <i class='bx bx-edit'></i>
-                                    </div>
+                                    </button>
                                     <!-- delete button -->
                                     <div class="delete-btn flex items-center justify-center bg-[#EAEDFF] text-[#FF5656] w-8 h-8 cursor-pointer rounded">
                                         <i class='bx bx-trash-alt'></i>
@@ -319,6 +319,55 @@ $(document).ready(function (){
         });
     });
 
+    // update tasks
+    // update task to the database with ajax
+    $(document).on("click", ".edit-btn", (e)=>{
+        let taskId = parseInt(e.target.closest(".task-box").id);
+        $("#update-modal").removeClass("hidden");
+        $("#update-modal").addClass("flex");
+        $("#update-modal").css("background-color", "#0000008a");
+        $(".close-update-form").click(function() {
+            $("#update-modal").removeClass("flex");
+            $("#update-modal").addClass("hidden");
+        });
+        console.log(taskId);
+        // console.log(taskId);
+        $(".update-task-form").submit((e)=>{
+            e.preventDefault();
+            let taskTitleValue = $("#task-title").val();
+            let taskDescValue = $("#task-description").val();
+            let taskStatus = $("#lists option:selected").attr("value");
+            let dueDateValue = $("#date-picker").val();
+            // console.log(columnId);
+            // eslint-disable-next-line jquery/no-ajax
+            $.ajax({
+                url: "http://localhost/task-board/public/home/updateTask",
+                type: "post",
+                data: {
+                    task_title: taskTitleValue,
+                    task_description: taskDescValue,
+                    end_date: dueDateValue,
+                    task_status: taskStatus,
+                    task_id: taskId
+                },
+                success: function (responce, status) {
+                    console.log(status);
+                    if(status === "success" && responce) {
+                        $("#task-title").val("");
+                        $("#task-description").val("");
+                        $("#lists").val("to do");
+                        $("#date-picker").val("");
+                        $(".tasks-column-wrapper").html("");
+                        displayAllTasks();
+                    }
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        });
+    });
+
     // delete task
     $(document).on("click", ".delete-btn",function (e) {
         let taskId = parseInt(e.target.closest(".task-box").id);
@@ -330,6 +379,8 @@ $(document).ready(function (){
             },
             success: function (response, status) {
                 console.log(response, status);
+                $(".tasks-column-wrapper").html("");
+                displayAllTasks();
             },
             error: function(error) {
                 console.log(error);

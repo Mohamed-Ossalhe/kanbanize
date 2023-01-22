@@ -83,6 +83,25 @@
             $tasks = $this->model->getDoneData($data);
             echo json_encode($tasks);
         }
+        // update task
+        public function updateTask() {
+            extract($_POST);
+            if(!empty($_POST["task_title"]) && !empty($_POST["task_description"]) && !empty($_POST["end_date"]) && !empty($_POST["task_status"]) && !empty($_POST["task_id"])){
+                $data = array(
+                    "task-title" => $this->validateData($task_title),
+                    "task-desc" => $this->validateData($task_description),
+                    "task-status" => $this->validateData($task_status),
+                    "task-date" => $this->validateData($end_date),
+                    "task-id" => $this->validateData($task_id),
+                    "user-id" => $_SESSION["user-id"]
+                );
+                // var_dump($data);
+                $this->model("Task");
+                $this->model->updateRow($data);
+            }else {
+                echo "Please Fill All The Fields!";
+            }
+        }
         // delete task
         public function deleteTask() {
             extract($_POST);
