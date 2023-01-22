@@ -35,6 +35,27 @@
                 echo "Please Fill All The Fields!";
             }
         }
+        // insert multiple tasks
+        public function addMultipleTasks() {
+            // echo "got it";
+            extract($_POST);
+            if(!empty($_POST["task_title"]) && !empty($_POST["task_description"]) && !empty($_POST["task_date"]) && !empty($_POST["task_status"])) {
+                for($count = 0; $count < count($task_title); $count++) {
+                    $data = array(
+                        "task-title" => $this->validateData($task_title[$count]),
+                        "task-desc" => $this->validateData($task_description[$count]),
+                        "task-status" => $this->validateData($task_status[$count]),
+                        "task-date" => $this->validateData($task_date[$count]),
+                        "user-id" => $_SESSION["user-id"]
+                    );
+                    // var_dump($data);
+                    $this->model("Task");
+                    $this->model->insertData($data);
+                }
+            }else {
+                echo "Please Fill All The Fields!";
+            }
+        }
         // get todo tasks related to the specified user
         public function getToDoTasks() {
             $data = array(
@@ -61,6 +82,14 @@
             $this->model("Task");
             $tasks = $this->model->getDoneData($data);
             echo json_encode($tasks);
+        }
+        // delete task
+        public function deleteTask() {
+            extract($_POST);
+            if(!empty($_POST["task_id"])) {
+                $this->model("Task");
+                $this->model->deleteRow($this->validateData($task_id));
+            }
         }
 
         // validate inputs and remove special characters

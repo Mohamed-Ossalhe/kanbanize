@@ -61,5 +61,15 @@
                 return $e->getMessage();
             }
         }
+        // delete one row of data
+        public function deleteRow($id) {
+            try{
+                $stmt = $this->connect()->prepare("DELETE FROM `tasks` WHERE task_id = :id");
+                $stmt->bindParam("id", $id);
+                $stmt->execute();
+            }catch(PDOException $e) {
+                return $e->getMessage();
+            }
+        }
     }
 ?>
