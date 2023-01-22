@@ -13,10 +13,11 @@
 .task-text-description p {
     --max-line: 3;
     --line-height: 1.4;
+    position: relative;
     max-height: calc(var(--max-line) * 1em * var(--line-height));
     line-height: var(--line-height);
+    word-wrap: break-word;
     overflow: hidden;
-    position: relative;
 }
 
 .task-text-description p:has(+.expnd-btn:not(:checked)):before {

@@ -17,39 +17,15 @@
         
 
         // operations
-        // add new column
-        public function addColumn() {
-            extract($_POST);
-            if(!empty($_POST["columnTitle"]) && isset($_SESSION["user-id"])) {
-                $data = array(
-                    "column-title" => $this->validateData($columnTitle),
-                    "column-user" => $_SESSION["user-id"]
-                );
-                $this->model("Column");
-                $this->model->insertData($data);
-            }else {
-                echo "Please Fill The Field!";
-            }
-        }
-        // get users column
-        public function getAllUserColumns() {
-            $data = array(
-                "user-id" => $_SESSION["user-id"]
-            );
-            $this->model("Column");
-            $columns = $this->model->getAllData($data);
-            echo json_encode($columns);
-        }
         // add new task
         public function addTask() {
             extract($_POST);
-            if(!empty($_POST["task_title"]) && !empty($_POST["task_description"]) && !empty($_POST["end_date"]) && !empty($_POST["column_id"])){
+            if(!empty($_POST["task_title"]) && !empty($_POST["task_description"]) && !empty($_POST["end_date"]) && !empty($_POST["task_status"])){
                 $data = array(
                     "task-title" => $this->validateData($task_title),
                     "task-desc" => $this->validateData($task_description),
-                    // "task-status" => "to do",
+                    "task-status" => $this->validateData($task_status),
                     "task-date" => $this->validateData($end_date),
-                    "column-id" => $this->validateData($column_id),
                     "user-id" => $_SESSION["user-id"]
                 );
                 var_dump($data);
@@ -59,13 +35,31 @@
                 echo "Please Fill All The Fields!";
             }
         }
-        // get all tasks related to the specified column
-        public function getAllUserTasks() {
+        // get todo tasks related to the specified user
+        public function getToDoTasks() {
             $data = array(
                 "user-id" => $_SESSION["user-id"]
             );
             $this->model("Task");
-            $tasks = $this->model->getAllData($data);
+            $tasks = $this->model->getToDoData($data);
+            echo json_encode($tasks);
+        }
+        // get in progress tasks related to the specified user
+        public function getInProgressTasks() {
+            $data = array(
+                "user-id" => $_SESSION["user-id"]
+            );
+            $this->model("Task");
+            $tasks = $this->model->getInProgressData($data);
+            echo json_encode($tasks);
+        }
+        // get done tasks related to the specified user
+        public function getDoneTasks() {
+            $data = array(
+                "user-id" => $_SESSION["user-id"]
+            );
+            $this->model("Task");
+            $tasks = $this->model->getDoneData($data);
             echo json_encode($tasks);
         }
 
