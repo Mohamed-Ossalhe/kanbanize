@@ -25,7 +25,7 @@
                     "task-title" => $this->validateData($task_title),
                     "task-desc" => $this->validateData($task_description),
                     "task-status" => $this->validateData($task_status),
-                    "task-date" => $this->validateData($end_date),
+                    "task-date" => $this->validateData(date("Y-m-d", strtotime($end_date))),
                     "user-id" => $_SESSION["user-id"]
                 );
                 var_dump($data);
@@ -56,32 +56,27 @@
                 echo "Please Fill All The Fields!";
             }
         }
-        // get todo tasks related to the specified user
-        public function getToDoTasks() {
+        // get all tasks related to the specified user
+        public function getAllTasks() {
             $data = array(
                 "user-id" => $_SESSION["user-id"]
             );
             $this->model("Task");
-            $tasks = $this->model->getToDoData($data);
+            $tasks = $this->model->getAllData($data);
             echo json_encode($tasks);
         }
-        // get in progress tasks related to the specified user
-        public function getInProgressTasks() {
-            $data = array(
-                "user-id" => $_SESSION["user-id"]
-            );
-            $this->model("Task");
-            $tasks = $this->model->getInProgressData($data);
-            echo json_encode($tasks);
-        }
-        // get done tasks related to the specified user
-        public function getDoneTasks() {
-            $data = array(
-                "user-id" => $_SESSION["user-id"]
-            );
-            $this->model("Task");
-            $tasks = $this->model->getDoneData($data);
-            echo json_encode($tasks);
+        // get one task related to task and user id
+        public function getTask() {
+            extract($_POST);
+            if(!empty($_POST["task_id"])) {
+                $data = array(
+                    "task-id" => $this->validateData($task_id),
+                    "user-id" => $_SESSION["user-id"]
+                );
+                $this->model("Task");
+                $task = $this->model->getRowData($data);
+                echo json_encode($task);
+            }
         }
         // update task
         public function updateTask() {
@@ -91,11 +86,11 @@
                     "task-title" => $this->validateData($task_title),
                     "task-desc" => $this->validateData($task_description),
                     "task-status" => $this->validateData($task_status),
-                    "task-date" => $this->validateData($end_date),
+                    "task-date" => $this->validateData(date("Y-m-d", strtotime($end_date))),
                     "task-id" => $this->validateData($task_id),
                     "user-id" => $_SESSION["user-id"]
                 );
-                // var_dump($data);
+                var_dump($data);
                 $this->model("Task");
                 $this->model->updateRow($data);
             }else {
@@ -108,6 +103,20 @@
             if(!empty($_POST["task_id"])) {
                 $this->model("Task");
                 $this->model->deleteRow($this->validateData($task_id));
+            }
+        }
+
+        // search tasks
+        public function searchTasks() {
+            extract($_POST);
+            if(!empty($_POST["task_title"])) {
+                $data = array(
+                    "task-title" => $task_title
+                );
+                // var_dump($data);
+                $this->model("Task");
+                $tasks = $this->model->searchDataRows($data);
+                echo json_encode($tasks);
             }
         }
 
