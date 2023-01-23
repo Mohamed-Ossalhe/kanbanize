@@ -1726,6 +1726,11 @@ input:checked + .toggle-bg {
   padding-bottom: 1.25rem;
 }
 
+.py-8 {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
 .pl-3 {
   padding-left: 0.75rem;
 }

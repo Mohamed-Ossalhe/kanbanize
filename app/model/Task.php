@@ -52,6 +52,17 @@
                 return $e->getMessage();
             }
         }
+        // update row on drag
+        public function updateDragedRow($data) {
+            try {
+                $stmt = $this->connect()->prepare("UPDATE `tasks` SET task_status = :status WHERE task_id = :id");
+                $stmt->bindParam("status", $data["task-status"]);
+                $stmt->bindParam("id", $data["task-id"]);
+                $stmt->execute();
+            }catch (PDOException $e) {
+                return $e->getMessage();
+            }
+        }
         // delete one row of data
         public function deleteRow($id) {
             try{
@@ -66,8 +77,8 @@
         // search data rows
         public function searchDataRows($data) {
             try {
-                $stmt = $this->connect()->prepare("SELECT * FROM `tasks` WHERE task_title LIKE '%title%'");
-                $stmt->bindParam("%:title%", $data["task-title"]);
+                $stmt = $this->connect()->prepare("SELECT * FROM `tasks` WHERE task_title LIKE :title");
+                $stmt->bindParam("title", $data["task-title"]);
                 if($stmt->execute()) {
                     return $stmt->fetchAll();
                 }

@@ -1,8 +1,8 @@
+// select tasks columns
+let todoTasks = $("#to-do");
+let doingTasks = $("#in-progress");
+let doneTasks = $("#done");
 $(document).ready(function (){
-    // select tasks columns
-    let todoTasks = $("#to-do .tasks-column-wrapper");
-    let doingTasks = $("#in-progress .tasks-column-wrapper");
-    let doneTasks = $("#done .tasks-column-wrapper");
     // load tasks after the document is fully loaded
     getAllTasks();
     
@@ -42,83 +42,7 @@ $(document).ready(function (){
         });
     });
 
-    // get all tasks form the database using ajax
-    function getAllTasks() {
-        let task = "";
-        $.ajax({ // eslint-disable-line jquery/no-ajax
-            url: "http://localhost/task-board/public/home/getAllTasks",
-            type: "get",
-            success: (response) => {
-                let dataParsed = $.parseJSON(response);
-                // remove old content
-                todoTasks.html("");
-                doingTasks.html("");
-                doneTasks.html("");
-                // calculate count
-                let todoCount = 0;
-                let doingCount = 0;
-                let doneCount = 0;
-                if(dataParsed.length > 0) {
-                    dataParsed.forEach((element) => {
-                        task = `<div draggable="true" class="task-box border-2 border-solid border-primary w-full rounded bg-primary text-white" id="${element.task_id}" ondragstart="dragStart(event)" ondragend="dragEnd(event)">
-                            <!-- task header -->
-                            <div class="task-header flex items-center justify-between py-2 px-2 bg-fourth text-black text-xl md:text-base rounded-t-md">
-                                <h2 class="task-title">${element.task_title}</h2>
-                                <div class="task-operations flex items-center gap-2">
-                                    <!-- update button -->
-                                    <button class="edit-btn flex items-center justify-center bg-[#EAEDFF] text-primary w-8 h-8 cursor-pointer rounded" type="button">
-                                        <i class='bx bx-edit'></i>
-                                    </button>
-                                    <!-- delete button -->
-                                    <div class="delete-btn flex items-center justify-center bg-[#EAEDFF] text-[#FF5656] w-8 h-8 cursor-pointer rounded">
-                                        <i class='bx bx-trash-alt'></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- task body -->
-                            <div class="task-body p-2">
-                                <!-- task description -->
-                                <div class="task-text-description text-lg md:text-sm">
-                                    <p>
-                                        ${element.task_description}
-                                    </p>
-                                    <input class="expnd-btn underline w-8 text-white bg-transparent border-none" type="checkbox" name="expnd-btn">
-                                </div>
-                                <!-- task start date and end date -->
-                                <div class="task-date flex items-center justify-between text-base md:text-sm mt-4">
-                                    <!-- start date -->
-                                    <div class="start-date">
-                                        <p>Created in ${element.date_created}</p>
-                                    </div>
-                                    <!-- end date -->
-                                    <div class="end-date">
-                                        <p>Due in ${element.date_end}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>`;
-                        if(element.task_status === "to do") {
-                            todoTasks.prepend(task);
-                            todoCount++;
-                        }else if(element.task_status === "in progress") {
-                            doingTasks.prepend(task);
-                            doingCount++;
-                        }else {
-                            doneTasks.prepend(task);
-                            doneCount++;
-                        }
-                    });
-                    $(".todo-count").text(todoCount);
-                    $(".in-progress-count").text(doingCount);
-                    $(".done-count").text(doneCount);
-                }
-                // console.log(task);
-            },
-            error: (error) => {
-                console.log(error);
-            }
-        });
-    }
+    
     // get one task
     function getTask(taskId) {
         $.ajax({ // eslint-disable-line
@@ -394,6 +318,84 @@ $(document).ready(function (){
     
 });
 
+// get all tasks form the database using ajax
+function getAllTasks() {
+    let task = "";
+    $.ajax({ // eslint-disable-line jquery/no-ajax
+        url: "http://localhost/task-board/public/home/getAllTasks",
+        type: "get",
+        success: (response) => {
+            let dataParsed = $.parseJSON(response);
+            // remove old content
+            todoTasks.html("");
+            doingTasks.html("");
+            doneTasks.html("");
+            // calculate count
+            let todoCount = 0;
+            let doingCount = 0;
+            let doneCount = 0;
+            if(dataParsed.length > 0) {
+                dataParsed.forEach((element) => {
+                    task = `<div draggable="true" class="task-box border-2 border-solid border-primary w-full rounded bg-primary text-white" id="${element.task_id}" ondragstart="dragStart(event)" ondragend="dragEnd(event)">
+                        <!-- task header -->
+                        <div class="task-header flex items-center justify-between py-2 px-2 bg-fourth text-black text-xl md:text-base rounded-t-md">
+                            <h2 class="task-title">${element.task_title}</h2>
+                            <div class="task-operations flex items-center gap-2">
+                                <!-- update button -->
+                                <button class="edit-btn flex items-center justify-center bg-[#EAEDFF] text-primary w-8 h-8 cursor-pointer rounded" type="button">
+                                    <i class='bx bx-edit'></i>
+                                </button>
+                                <!-- delete button -->
+                                <div class="delete-btn flex items-center justify-center bg-[#EAEDFF] text-[#FF5656] w-8 h-8 cursor-pointer rounded">
+                                    <i class='bx bx-trash-alt'></i>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- task body -->
+                        <div class="task-body p-2">
+                            <!-- task description -->
+                            <div class="task-text-description text-lg md:text-sm">
+                                <p>
+                                    ${element.task_description}
+                                </p>
+                                <input class="expnd-btn underline w-8 text-white bg-transparent border-none" type="checkbox" name="expnd-btn">
+                            </div>
+                            <!-- task start date and end date -->
+                            <div class="task-date flex items-center justify-between text-base md:text-sm mt-4">
+                                <!-- start date -->
+                                <div class="start-date">
+                                    <p>Created in ${element.date_created}</p>
+                                </div>
+                                <!-- end date -->
+                                <div class="end-date">
+                                    <p>Due in ${element.date_end}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+                    if(element.task_status === "to do") {
+                        todoTasks.prepend(task);
+                        todoCount++;
+                    }else if(element.task_status === "in progress") {
+                        doingTasks.prepend(task);
+                        doingCount++;
+                    }else {
+                        doneTasks.prepend(task);
+                        doneCount++;
+                    }
+                });
+                $(".todo-count").text(todoCount);
+                $(".in-progress-count").text(doingCount);
+                $(".done-count").text(doneCount);
+            }
+            // console.log(task);
+        },
+        error: (error) => {
+            console.log(error);
+        }
+    });
+}
+
 // drag 
 // eslint-disable-next-line no-unused-vars
 function dragStart(event) {
@@ -412,6 +414,30 @@ function dragEnd(event) {
 
 // eslint-disable-next-line no-unused-vars
 function dropTask(event) {
-    let parentContainer = event.target;
-    let taskStatus = parentContainer.id;
+    let container = event.target; 
+    let taskId = $(".task-box.draggable").attr("id");
+    let status = container.id;
+    if(status === "in-progress") status = "in progress";
+    else if(status === "done") status = "done";
+    else status = "to do";
+    console.log(status);
+    let draggableTask = $(".task-box.draggable");
+    if(draggableTask != null) {
+        $.ajax({ // eslint-disable-line
+            url: "http://localhost/task-board/public/home/updateTaskOnDrag",
+            type: "post",
+            data: {
+                task_id: taskId,
+                task_status: status
+            },
+            success: (response, status) => {
+                console.log(response, status);
+                $(".tasks-column-wrapper").html("");
+                getAllTasks();
+            },
+            error: (error) => {
+                console.log(error);
+            }
+        });
+    }
 }

@@ -53,33 +53,33 @@
             <!-- tasks wrapper -->
             <div class="tasks-wrapper flex items-start gap-6 px-2 max-h-full">
                 <!-- todo column -->
-                <div class="tasks-column columns max-h-full" id="to-do">
+                <div class="tasks-column columns max-h-full">
                     <!-- task column header -->
                     <div class="task-column-header capitalize border-b-2 border-third py-2 my-3">
                         <h3>to do</h3>
                     </div>
                     <!-- task column wrapper -->
-                    <div class="tasks-column-wrapper scrollbar-hide flex flex-col gap-2  max-h-[400px] overflow-y-scroll" ondragover="dragOver(event)">
+                    <div class="tasks-column-wrapper scrollbar-hide flex flex-col gap-2  max-h-[400px] overflow-y-scroll py-8" id="to-do" ondrop="dropTask(event)" ondragover="dragOver(event)">
                     </div>
                 </div>
                 <!-- in progress column -->
-                <div class="tasks-column columns max-h-full" id="in-progress">
+                <div class="tasks-column columns max-h-full">
                     <!-- task column header -->
                     <div class="task-column-header capitalize border-b-2 border-third py-2 my-3">
                         <h3>in progress</h3>
                     </div>
                     <!-- task column wrapper -->
-                    <div class="tasks-column-wrapper scrollbar-hide flex flex-col gap-2  max-h-[400px] overflow-y-scroll" ondragover="dragOver(event)">
+                    <div class="tasks-column-wrapper scrollbar-hide flex flex-col gap-2  max-h-[400px] overflow-y-scroll py-8" id="in-progress" ondrop="dropTask(event)" ondragover="dragOver(event)">
                     </div>
                 </div>
                 <!-- done column -->
-                <div class="tasks-column columns max-h-full" id="done">
+                <div class="tasks-column columns max-h-full">
                     <!-- task column header -->
                     <div class="task-column-header capitalize border-b-2 border-third py-2 my-3">
                         <h3>done</h3>
                     </div>
                     <!-- task column wrapper -->
-                    <div class="tasks-column-wrapper scrollbar-hide flex flex-col gap-2  max-h-[400px] overflow-y-scroll" ondragover="dragOver(event)">
+                    <div class="tasks-column-wrapper scrollbar-hide flex flex-col gap-2  max-h-[400px] overflow-y-scroll py-8" ondrop="dropTask(event)" ondragover="dragOver(event)" id="done" >
                     </div>
                 </div>
             </div>

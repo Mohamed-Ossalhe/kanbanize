@@ -97,6 +97,21 @@
                 echo "Please Fill All The Fields!";
             }
         }
+        // update task status on drag
+        public function updateTaskOnDrag() {
+            extract($_POST);
+            if(!empty($_POST["task_id"]) && !empty($_POST["task_status"])) {
+                $data = array(
+                    "task-id" => $this->validateData($task_id),
+                    "task-status" => $this->validateData($task_status)
+                );
+                var_dump($data);
+                $this->model("Task");
+                $this->model->updateDragedRow($data);
+            }else {
+                echo 'id not found';
+            }
+        }
         // delete task
         public function deleteTask() {
             extract($_POST);
@@ -111,7 +126,7 @@
             extract($_POST);
             if(!empty($_POST["task_title"])) {
                 $data = array(
-                    "task-title" => $task_title
+                    "task-title" => '%'.$this->validateData($task_title).'%'
                 );
                 // var_dump($data);
                 $this->model("Task");
