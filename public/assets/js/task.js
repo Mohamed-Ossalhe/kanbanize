@@ -1,10 +1,10 @@
+// select tasks columns
+let todoTasks = $("#to-do");
+let doingTasks = $("#in-progress");
+let doneTasks = $("#done");
 $(document).ready(function (){
-    // select tasks columns
-    let todoTasks = $("#to-do .tasks-column-wrapper");
-    let doingTasks = $("#in-progress .tasks-column-wrapper");
-    let doneTasks = $("#done .tasks-column-wrapper");
     // load tasks after the document is fully loaded
-    displayAllTasks();
+    getAllTasks();
     
     // submit task to the database with ajax
     $(".add-task-form").submit((e)=>{
@@ -26,13 +26,14 @@ $(document).ready(function (){
             },
             success: function (responce, status) {
                 console.log(status);
+                console.log(responce);
                 if(status === "success" && responce) {
                     $("#task-title").val("");
                     $("#task-description").val("");
                     $("#lists").val("to do");
                     $("#date-picker").val("");
                     $(".tasks-column-wrapper").html("");
-                    displayAllTasks();
+                    getAllTasks();
                 }
             },
             error: function (error) {
@@ -41,194 +42,34 @@ $(document).ready(function (){
         });
     });
 
-    // get todo tasks form the database using ajax
-    function getToDoTasks() {
-        let task = "";
-        $.ajax({ // eslint-disable-line jquery/no-ajax
-            url: "http://localhost/task-board/public/home/getToDoTasks",
-            type: "get",
-            success: (response) => {
-                let dataParsed = $.parseJSON(response);
-                $(".todo-count").text(dataParsed.length);
-                if(dataParsed.length > 0) {
-                    dataParsed.forEach((element) => {
-                        task += `<div class="task-box w-full rounded bg-primary text-white" id="${element.task_id}">
-                            <!-- task header -->
-                            <div class="task-header flex items-center justify-between py-2 px-2 bg-fourth text-black text-xl md:text-base rounded-t-md">
-                                <h2 class="task-title">${element.task_title}</h2>
-                                <div class="task-operations flex items-center gap-2">
-                                    <!-- update button -->
-                                    <button class="edit-btn flex items-center justify-center bg-[#EAEDFF] text-primary w-8 h-8 cursor-pointer rounded" type="button">
-                                        <i class='bx bx-edit'></i>
-                                    </button>
-                                    <!-- delete button -->
-                                    <div class="delete-btn flex items-center justify-center bg-[#EAEDFF] text-[#FF5656] w-8 h-8 cursor-pointer rounded">
-                                        <i class='bx bx-trash-alt'></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- task body -->
-                            <div class="task-body p-2">
-                                <!-- task description -->
-                                <div class="task-text-description text-lg md:text-sm">
-                                    <p>
-                                        ${element.task_description}
-                                    </p>
-                                    <input class="expnd-btn underline w-8 text-white bg-transparent border-none" type="checkbox" name="expnd-btn">
-                                </div>
-                                <!-- task start date and end date -->
-                                <div class="task-date flex items-center justify-between text-base md:text-sm mt-4">
-                                    <!-- start date -->
-                                    <div class="start-date">
-                                        <p>Created in ${element.date_created}</p>
-                                    </div>
-                                    <!-- end date -->
-                                    <div class="end-date">
-                                        <p>Due in ${element.date_end}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>`;
-                    });
-                }
-                // console.log(task);
-                todoTasks.prepend(task);
+    
+    // get one task
+    function getTask(taskId) {
+        $.ajax({ // eslint-disable-line
+            url: "http://localhost/task-board/public/home/getTask",
+            type: "post",
+            data: {
+                task_id: taskId
             },
-            error: (error) => {
+            success: function (response) {
+                // console.log(response, status);
+                let dataParsed = $.parseJSON(response);
+                // console.log(dataParsed);
+                if(dataParsed) {
+                    console.log(dataParsed.task_title);
+                    $("#u-task-title").val(dataParsed.task_title);
+                    $("#u-task-description").val(dataParsed.task_description);
+                    $("#u-lists").val(dataParsed.task_status);
+                    $("#u-date-picker").val(dataParsed.date_end);
+                }
+            },
+            error: function (error) {
                 console.log(error);
             }
         });
     }
-
-    // get in progress tasks form the database using ajax
-    function getInProgressTasks() {
-        let task = "";
-        $.ajax({ // eslint-disable-line jquery/no-ajax
-            url: "http://localhost/task-board/public/home/getInProgressTasks",
-            type: "get",
-            success: (response) => {
-                let dataParsed = $.parseJSON(response);
-                $(".in-progress-count").text(dataParsed.length);
-                if(dataParsed.length > 0) {
-                    dataParsed.forEach((element) => {
-                        task += `<div class="task-box w-full rounded bg-primary text-white" id="${element.task_id}">
-                            <!-- task header -->
-                            <div class="task-header flex items-center justify-between py-2 px-2 bg-fourth text-black text-xl md:text-base rounded-t-md">
-                                <h2 class="task-title">${element.task_title}</h2>
-                                <div class="task-operations flex items-center gap-2">
-                                    <!-- update button -->
-                                    <button class="edit-btn flex items-center justify-center bg-[#EAEDFF] text-primary w-8 h-8 cursor-pointer rounded" type="button">
-                                        <i class='bx bx-edit'></i>
-                                    </button>
-                                    <!-- delete button -->
-                                    <div class="delete-btn flex items-center justify-center bg-[#EAEDFF] text-[#FF5656] w-8 h-8 cursor-pointer rounded">
-                                        <i class='bx bx-trash-alt'></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- task body -->
-                            <div class="task-body p-2">
-                                <!-- task description -->
-                                <div class="task-text-description text-lg md:text-sm">
-                                    <p>
-                                        ${element.task_description}
-                                    </p>
-                                    <input class="expnd-btn underline w-8 text-white bg-transparent border-none" type="checkbox" name="expnd-btn">
-                                </div>
-                                <!-- task start date and end date -->
-                                <div class="task-date flex items-center justify-between text-base md:text-sm mt-4">
-                                    <!-- start date -->
-                                    <div class="start-date">
-                                        <p>Created in ${element.date_created}</p>
-                                    </div>
-                                    <!-- end date -->
-                                    <div class="end-date">
-                                        <p>Due in ${element.date_end}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>`;
-                    });
-                }
-                // console.log(task);
-                doingTasks.prepend(task);
-            },
-            error: (error) => {
-                console.log(error);
-            }
-        });
-    }
-
-    // get done tasks form the database using ajax
-    function getDoneTasks() {
-        let task = "";
-        $.ajax({ // eslint-disable-line jquery/no-ajax
-            url: "http://localhost/task-board/public/home/getDoneTasks",
-            type: "get",
-            success: (response) => {
-                let dataParsed = $.parseJSON(response);
-                $(".done-count").text(dataParsed.length);
-                if(dataParsed.length > 0) {
-                    dataParsed.forEach((element) => {
-                        task += `<div class="task-box w-full rounded bg-primary text-white" id="${element.task_id}">
-                            <!-- task header -->
-                            <div class="task-header flex items-center justify-between py-2 px-2 bg-fourth text-black text-xl md:text-base rounded-t-md">
-                                <h2 class="task-title">${element.task_title}</h2>
-                                <div class="task-operations flex items-center gap-2">
-                                    <!-- update button -->
-                                    <button class="edit-btn flex items-center justify-center bg-[#EAEDFF] text-primary w-8 h-8 cursor-pointer rounded" type="button">
-                                        <i class='bx bx-edit'></i>
-                                    </button>
-                                    <!-- delete button -->
-                                    <div class="delete-btn flex items-center justify-center bg-[#EAEDFF] text-[#FF5656] w-8 h-8 cursor-pointer rounded">
-                                        <i class='bx bx-trash-alt'></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- task body -->
-                            <div class="task-body p-2">
-                                <!-- task description -->
-                                <div class="task-text-description text-lg md:text-sm">
-                                    <p>
-                                        ${element.task_description}
-                                    </p>
-                                    <input class="expnd-btn underline w-8 text-white bg-transparent border-none" type="checkbox" name="expnd-btn">
-                                </div>
-                                <!-- task start date and end date -->
-                                <div class="task-date flex items-center justify-between text-base md:text-sm mt-4">
-                                    <!-- start date -->
-                                    <div class="start-date">
-                                        <p>Created in ${element.date_created}</p>
-                                    </div>
-                                    <!-- end date -->
-                                    <div class="end-date">
-                                        <p>Due in ${element.date_end}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>`;
-                    });
-                }
-                // console.log(task);
-                doneTasks.prepend(task);
-            },
-            error: (error) => {
-                console.log(error);
-            }
-        });
-    }
-    // function calls all the display functions
-    function displayAllTasks() {
-        // to do tasks
-        getToDoTasks();
-        // in progress tasks
-        getInProgressTasks();
-        // done tasks
-        getDoneTasks();
-    }
-
     // add multiple tasks
-    let maxNum = parseInt($("#tasks-count").attr("max"));
+    let maxNum = 5;
     let tasksAdded = $("#tasks-count").val();
     $("#tasks-count").on("change", ()=>{
         if(tasksAdded === maxNum) {
@@ -311,7 +152,7 @@ $(document).ready(function (){
                 $("#tasks-count").val(0);
                 $("form-fields").remove();
                 $(".tasks-column-wrapper").html("");
-                displayAllTasks();
+                getAllTasks();
             },
             error: function(error) {
                 console.log(error);
@@ -331,13 +172,14 @@ $(document).ready(function (){
             $("#update-modal").addClass("hidden");
         });
         console.log(taskId);
+        getTask(taskId);
         // console.log(taskId);
         $(".update-task-form").submit((e)=>{
             e.preventDefault();
-            let taskTitleValue = $("#task-title").val();
-            let taskDescValue = $("#task-description").val();
-            let taskStatus = $("#lists option:selected").attr("value");
-            let dueDateValue = $("#date-picker").val();
+            let taskTitleValue = $("#u-task-title").val();
+            let taskDescValue = $("#u-task-description").val();
+            let taskStatus = $("#u-lists option:selected").attr("value");
+            let dueDateValue = $("#u-date-picker").val();
             // console.log(columnId);
             // eslint-disable-next-line jquery/no-ajax
             $.ajax({
@@ -351,20 +193,18 @@ $(document).ready(function (){
                     task_id: taskId
                 },
                 success: function (responce, status) {
-                    console.log(status);
+                    console.log(responce, status);
                     if(status === "success" && responce) {
-                        $("#task-title").val("");
-                        $("#task-description").val("");
-                        $("#lists").val("to do");
-                        $("#date-picker").val("");
-                        $(".tasks-column-wrapper").html("");
-                        displayAllTasks();
+                        $("#update-modal").removeClass("flex");
+                        $("#update-modal").addClass("hidden");
+                        getAllTasks();
                     }
                 },
                 error: function (error) {
                     console.log(error);
                 }
             });
+            taskId = "";
         });
     });
 
@@ -380,11 +220,224 @@ $(document).ready(function (){
             success: function (response, status) {
                 console.log(response, status);
                 $(".tasks-column-wrapper").html("");
-                displayAllTasks();
+                getAllTasks();
             },
             error: function(error) {
                 console.log(error);
             }
         });
     });
+
+    // search form // todo: complete the form logic search
+    $(".search-form").keyup(()=>{
+        let formValue = $("#search-field").val();
+        if(formValue !== "") {
+            let task = "";
+            $.ajax({ // eslint-disable-line jquery/no-ajax
+                url: "http://localhost/task-board/public/home/searchTasks",
+                type: "post",
+                data: {
+                    "task_title": formValue
+                },
+                success: (response) => {
+                    console.log(response);
+                    let dataParsed = $.parseJSON(response);
+                    // remove old content
+                    todoTasks.html("");
+                    doingTasks.html("");
+                    doneTasks.html("");
+                    // calculate count
+                    let todoCount = 0;
+                    let doingCount = 0;
+                    let doneCount = 0;
+                    if(dataParsed.length > 0) {
+                        dataParsed.forEach((element) => {
+                            task = `<div class="task-box border-2 border-solid border-primary w-full rounded bg-primary text-white" id="${element.task_id}">
+                                <!-- task header -->
+                                <div class="task-header flex items-center justify-between py-2 px-2 bg-fourth text-black text-xl md:text-base rounded-t-md">
+                                    <h2 class="task-title">${element.task_title}</h2>
+                                    <div class="task-operations flex items-center gap-2">
+                                        <!-- update button -->
+                                        <button class="edit-btn flex items-center justify-center bg-[#EAEDFF] text-primary w-8 h-8 cursor-pointer rounded" type="button">
+                                            <i class='bx bx-edit'></i>
+                                        </button>
+                                        <!-- delete button -->
+                                        <div class="delete-btn flex items-center justify-center bg-[#EAEDFF] text-[#FF5656] w-8 h-8 cursor-pointer rounded">
+                                            <i class='bx bx-trash-alt'></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- task body -->
+                                <div class="task-body p-2">
+                                    <!-- task description -->
+                                    <div class="task-text-description text-lg md:text-sm">
+                                        <p>
+                                            ${element.task_description}
+                                        </p>
+                                        <input class="expnd-btn underline w-8 text-white bg-transparent border-none" type="checkbox" name="expnd-btn">
+                                    </div>
+                                    <!-- task start date and end date -->
+                                    <div class="task-date flex items-center justify-between text-base md:text-sm mt-4">
+                                        <!-- start date -->
+                                        <div class="start-date">
+                                            <p>Created in ${element.date_created}</p>
+                                        </div>
+                                        <!-- end date -->
+                                        <div class="end-date">
+                                            <p>Due in ${element.date_end}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>`;
+                            if(element.task_status === "to do") {
+                                todoTasks.prepend(task);
+                                todoCount++;
+                            }else if(element.task_status === "in progress") {
+                                doingTasks.prepend(task);
+                                doingCount++;
+                            }else {
+                                doneTasks.prepend(task);
+                                doneCount++;
+                            }
+                        });
+                        $(".todo-count").text(todoCount);
+                        $(".in-progress-count").text(doingCount);
+                        $(".done-count").text(doneCount);
+                    }
+                    // console.log(task);
+                },
+                error: (error) => {
+                    console.log(error);
+                }
+            });
+        }else {
+            getAllTasks();
+        }
+    });
+
+    
 });
+
+// get all tasks form the database using ajax
+function getAllTasks() {
+    let task = "";
+    $.ajax({ // eslint-disable-line jquery/no-ajax
+        url: "http://localhost/task-board/public/home/getAllTasks",
+        type: "get",
+        success: (response) => {
+            let dataParsed = $.parseJSON(response);
+            // remove old content
+            todoTasks.html("");
+            doingTasks.html("");
+            doneTasks.html("");
+            // calculate count
+            let todoCount = 0;
+            let doingCount = 0;
+            let doneCount = 0;
+            if(dataParsed.length > 0) {
+                dataParsed.forEach((element) => {
+                    task = `<div draggable="true" class="task-box border-2 border-solid border-primary w-full rounded bg-primary text-white" id="${element.task_id}" ondragstart="dragStart(event)" ondragend="dragEnd(event)">
+                        <!-- task header -->
+                        <div class="task-header flex items-center justify-between py-2 px-2 bg-fourth text-black text-xl md:text-base rounded-t-md">
+                            <h2 class="task-title">${element.task_title}</h2>
+                            <div class="task-operations flex items-center gap-2">
+                                <!-- update button -->
+                                <button class="edit-btn flex items-center justify-center bg-[#EAEDFF] text-primary w-8 h-8 cursor-pointer rounded" type="button">
+                                    <i class='bx bx-edit'></i>
+                                </button>
+                                <!-- delete button -->
+                                <div class="delete-btn flex items-center justify-center bg-[#EAEDFF] text-[#FF5656] w-8 h-8 cursor-pointer rounded">
+                                    <i class='bx bx-trash-alt'></i>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- task body -->
+                        <div class="task-body p-2">
+                            <!-- task description -->
+                            <div class="task-text-description text-lg md:text-sm">
+                                <p>
+                                    ${element.task_description}
+                                </p>
+                                <input class="expnd-btn underline w-8 text-white bg-transparent border-none" type="checkbox" name="expnd-btn">
+                            </div>
+                            <!-- task start date and end date -->
+                            <div class="task-date flex items-center justify-between text-base md:text-sm mt-4">
+                                <!-- start date -->
+                                <div class="start-date">
+                                    <p>Created in ${element.date_created}</p>
+                                </div>
+                                <!-- end date -->
+                                <div class="end-date">
+                                    <p>Due in ${element.date_end}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+                    if(element.task_status === "to do") {
+                        todoTasks.prepend(task);
+                        todoCount++;
+                    }else if(element.task_status === "in progress") {
+                        doingTasks.prepend(task);
+                        doingCount++;
+                    }else {
+                        doneTasks.prepend(task);
+                        doneCount++;
+                    }
+                });
+                $(".todo-count").text(todoCount);
+                $(".in-progress-count").text(doingCount);
+                $(".done-count").text(doneCount);
+            }
+            // console.log(task);
+        },
+        error: (error) => {
+            console.log(error);
+        }
+    });
+}
+
+// drag 
+// eslint-disable-next-line no-unused-vars
+function dragStart(event) {
+    let task = event.target;
+    task.classList.add("draggable");
+}
+// eslint-disable-next-line no-unused-vars
+function dragOver(event) {
+    event.preventDefault();
+}
+// eslint-disable-next-line no-unused-vars
+function dragEnd(event) {
+    let task = event.target;
+    task.classList.remove("draggable");
+}
+
+// eslint-disable-next-line no-unused-vars
+function dropTask(event) {
+    let container = event.target; 
+    let taskId = $(".task-box.draggable").attr("id");
+    let status = container.id;
+    if(status === "in-progress") status = "in progress";
+    else if(status === "done") status = "done";
+    else status = "to do";
+    console.log(status);
+    let draggableTask = $(".task-box.draggable");
+    if(draggableTask != null) {
+        $.ajax({ // eslint-disable-line
+            url: "http://localhost/task-board/public/home/updateTaskOnDrag",
+            type: "post",
+            data: {
+                task_id: taskId,
+                task_status: status
+            },
+            success: (response, status) => {
+                console.log(response, status);
+                $(".tasks-column-wrapper").html("");
+                getAllTasks();
+            },
+            error: (error) => {
+                console.log(error);
+            }
+        });
+    }
+}
