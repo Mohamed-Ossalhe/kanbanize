@@ -5,26 +5,25 @@ $(document).ready(function () {
         let userName = $("#sign-name").val();
         let userEmail = $("#sign-email").val();
         let userPassword = $("#sign-password").val();
-
-        // console.log(userName);
-        // console.log(userEmail);
-        // console.log(userPassword);
+        let userImage = $("#image")[0].files;
+        let role = 2;
+        let formData = new FormData();
+        formData.append("user_image",userImage[0]);
+        formData.append("user_name",userName);
+        formData.append("user_email",userEmail);
+        formData.append("user_password",userPassword);
+        formData.append("role",role);
         $.ajax({ // eslint-disable-line jquery/no-ajax
             url: "http://localhost/task-board/public/user/signUp",
             type: "post",
-            data: {
-                user_name: userName,
-                user_email: userEmail,
-                user_password: userPassword,
-                role: 2
-            },
+            data: formData,
+            contentType: false,
+            processData: false,
             success: function(responce, status){
-                console.log(status);
-                console.log(responce);
                 $("#sign-name").val("");
                 $("#sign-email").val("");
                 $("#sign-password").val("");
-                location.assign("http://localhost/task-board/public/home/");
+                $("#image").val("");
             },
             error: function(error){
                 console.log(error);
@@ -37,9 +36,6 @@ $(document).ready(function () {
         e.preventDefault();
         let userEmail = $("#log-email").val();
         let userPassword = $("#log-password").val();
-
-        // console.log(userEmail);
-        // console.log(userPassword);
         $.ajax({ // eslint-disable-line jquery/no-ajax
             url: "http://localhost/task-board/public/user/logIn",
             type: "post",

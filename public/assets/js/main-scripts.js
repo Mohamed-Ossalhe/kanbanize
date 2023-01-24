@@ -1,0 +1,83 @@
+$(document).ready(()=>{
+    // get profile info elements
+    let profileImage = $(".profile-image > img");
+    let profileName = $(".profile-info-text h1");
+    let profileEmail = $(".profile-info-text h2");
+    // get form inputs
+    // update form
+    let updateForm = $(".update-profile-form");
+    let inputImage = $("#user-image");
+    let inputName = $("#user-name");
+    let inputEmail = $("#user-email");
+    let oldPassword = $("#old-password");
+    let newPassword = $("#new-password");
+    // data
+    let profileData = {
+        // profile info
+        profileImage: profileImage,
+        profileName: profileName,
+        profileEmail: profileEmail,
+        // form-inputs
+        formImage: inputImage,
+        formName: inputName,
+        formEmail: inputEmail,
+        formOldPass: oldPassword,
+        formNewPass: newPassword
+    };
+    getUserInfo(profileData);
+    updateForm.submit((e)=>{
+        e.preventDefault();
+        updateUserInfo(profileData);
+    });
+});
+
+function getUserInfo(data) {
+    $.ajax({ // eslint-disable-line
+        url: "http://localhost/task-board/public/user/getUserInfo",
+        type: "get",
+        success: (response) => {
+            let dataParsed = $.parseJSON(response);
+            // insert profile data into profile dom elements
+            data.profileImage.attr("src", "http://localhost/task-board/public/assets/img/" + dataParsed.user_image);
+            data.profileName.text(dataParsed.user_name);
+            data.profileEmail.text(dataParsed.user_email);
+            // insert profile data into form elements
+            data.formName.val(dataParsed.user_name);
+            data.formEmail.val(dataParsed.user_email);
+        },
+        error: (error) => {
+            console.log(error);
+        }
+    });
+}
+
+function updateUserInfo(data) {
+    let image = data.formImage[0].files;
+    let name = data.formName.val();
+    let email = data.formEmail.val();
+    let oldPass = data.formOldPass.val();
+    let newPass = data.formNewPass.val();
+    // console.log(image, name, email, oldPass, newPass);
+    let formData = new FormData();
+    formData.append("user_image",image[0]);
+    formData.append("user_name",name);
+    formData.append("user_email",email);
+    formData.append("user_old_password",oldPass);
+    formData.append("user_new_password",newPass);
+    // $.ajax({ // eslint-disable-line jquery/no-ajax
+    //     url: "http://localhost/task-board/public/user/signUp",
+    //     type: "post",
+    //     data: formData,
+    //     contentType: false,
+    //     processData: false,
+    //     success: function(responce, status){
+    //         $("#sign-name").val("");
+    //         $("#sign-email").val("");
+    //         $("#sign-password").val("");
+    //         $("#image").val("");
+    //     },
+    //     error: function(error){
+    //         console.log(error);
+    //     }
+    // });
+}

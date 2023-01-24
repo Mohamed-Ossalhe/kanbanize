@@ -15,7 +15,6 @@
             }
         }
         
-
         // operations
         // add new task
         public function addTask() {
