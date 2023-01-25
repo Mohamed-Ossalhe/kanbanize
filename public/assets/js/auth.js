@@ -19,11 +19,12 @@ $(document).ready(function () {
             data: formData,
             contentType: false,
             processData: false,
-            success: function(responce, status){
+            success: function(responce){
                 $("#sign-name").val("");
                 $("#sign-email").val("");
                 $("#sign-password").val("");
                 $("#image").val("");
+                $(".error").text(responce);
             },
             error: function(error){
                 console.log(error);
@@ -48,6 +49,7 @@ $(document).ready(function () {
                     // console.log(response);
                     location.assign("http://localhost/task-board/public/home/");
                 }
+                $(".error").text(response);
             },
             error: function(error) {
                 console.log(error);

@@ -24,18 +24,19 @@
             <div class="container mx-auto px-2">
                 <div class="profile-body-wrapper px-10">
                     <div class="profile-form">
+                        <p class="error text-red-800"></p>
                         <form class="update-profile-form flex flex-col items-center gap-y-8" method="post" enctype="multipart/form-data">
                             <div class="profile-image flex items-end justify-evenly w-full pl-10">
                                 <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white w-1/2" for="user-image">Profile Image:</label>
                                 <div class="photo w-1/2">
-                                    <img class="preview-image rounded h-24 w-24 mb-2" alt="">
-                                    <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="user-image" type="file">
+                                    <!-- <img class="preview-image rounded h-24 w-24 mb-2" alt=""> -->
+                                    <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="user-image" type="file" required>
                                 </div>
                             </div>
                             <div class="profile-name flex items-end justify-evenly w-full pl-10">
                                 <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white w-1/2" for="user-name">User Name:</label>
                                 <div class="input w-1/2">
-                                    <input type="text" id="user-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="User Name">
+                                    <input type="text" id="user-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="User Name" required>
                                 </div>
                             </div>
                             <div class="profile-password flex items-end justify-evenly w-full pl-10">
@@ -58,7 +59,7 @@
                             </div>
                             <div class="profile-btns w-full">
                                 <div class="profile-btns-wrapper flex gap-2 items-center justify-end">
-                                    <button class="cancel-btn bg-gray-800 text-white py-2 px-10 rounded">Cancel</button>
+                                    <a href="../" class="cancel-btn bg-gray-800 text-white py-2 px-10 rounded">Cancel</a>
                                     <button type="submit" class="save-btn bg-primary text-white py-2 px-10 rounded">Save</button>
                                 </div>
                             </div>

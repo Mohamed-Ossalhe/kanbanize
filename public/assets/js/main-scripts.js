@@ -3,6 +3,10 @@ $(document).ready(()=>{
     let profileImage = $(".profile-image > img");
     let profileName = $(".profile-info-text h1");
     let profileEmail = $(".profile-info-text h2");
+    let headerProfileImage = $(".header-profile-image");
+    let headerProfileName = $(".user-name");
+    let headerProfileEmail = $(".user-email");
+
     // get form inputs
     // update form
     let updateForm = $(".update-profile-form");
@@ -14,6 +18,9 @@ $(document).ready(()=>{
     // data
     let profileData = {
         // profile info
+        headerUserName: headerProfileName,
+        headerUserEmail: headerProfileEmail,
+        headerImage: headerProfileImage,
         profileImage: profileImage,
         profileName: profileName,
         profileEmail: profileEmail,
@@ -38,6 +45,9 @@ function getUserInfo(data) {
         success: (response) => {
             let dataParsed = $.parseJSON(response);
             // insert profile data into profile dom elements
+            data.headerUserName.text(dataParsed.user_name);
+            data.headerUserEmail.text(dataParsed.user_email);
+            data.headerImage.attr("src", "http://localhost/task-board/public/assets/img/" + dataParsed.user_image);
             data.profileImage.attr("src", "http://localhost/task-board/public/assets/img/" + dataParsed.user_image);
             data.profileName.text(dataParsed.user_name);
             data.profileEmail.text(dataParsed.user_email);
@@ -64,20 +74,23 @@ function updateUserInfo(data) {
     formData.append("user_email",email);
     formData.append("user_old_password",oldPass);
     formData.append("user_new_password",newPass);
-    // $.ajax({ // eslint-disable-line jquery/no-ajax
-    //     url: "http://localhost/task-board/public/user/signUp",
-    //     type: "post",
-    //     data: formData,
-    //     contentType: false,
-    //     processData: false,
-    //     success: function(responce, status){
-    //         $("#sign-name").val("");
-    //         $("#sign-email").val("");
-    //         $("#sign-password").val("");
-    //         $("#image").val("");
-    //     },
-    //     error: function(error){
-    //         console.log(error);
-    //     }
-    // });
+    // console.log(image, name, email, oldPass, newPass);
+    $.ajax({ // eslint-disable-line jquery/no-ajax
+        url: "http://localhost/task-board/public/user/updateUserInfo",
+        type: "post",
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function(response){
+            $(".error").text(response);
+            console.log(response);
+            getUserInfo(data);
+            data.formImage.val("");
+            data.formOldPass.val("");
+            data.formNewPass.val("");
+        },
+        error: function(error){
+            console.log(error);
+        }
+    });
 }
