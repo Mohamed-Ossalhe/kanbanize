@@ -5,7 +5,7 @@
         <div class="header-wrapper flex items-center justify-between">
             <!-- logo -->
             <div class="main-logo">
-                <img class="h-6" src="<?=BASE_ASSETS_URL?>img/logo-white.svg" alt="Kanbanize logo">
+                <a href="<?=BASE_URL?>public/"><img class="h-6" src="<?=BASE_ASSETS_URL?>img/logo-white.svg" alt="Kanbanize logo"></a>
             </div>
             <!-- nav-links-wrapper -->
             <div class="nav-links-wrapper flex items-center justify-between gap-3">
