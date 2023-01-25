@@ -69,20 +69,23 @@ $(document).ready(function (){
         });
     }
     // add multiple tasks
-    let maxNum = 5;
-    let tasksAdded = $("#tasks-count").val();
-    $("#tasks-count").on("change", ()=>{
-        if(tasksAdded === maxNum) {
-            $(this).hide(); // eslint-disable-line
+    let maxNum = 3;
+    let i = 0;
+    let x = 3;
+    $(".add-form").on("click", ()=>{
+        if(i === maxNum) {
+            $(".count").hide(); // eslint-disable-line jquery/no-hide
             return;
         }
         addMultipleTasks();
+        x++;
+        i++;
     });
     // add multiple tasks forms
     function addMultipleTasks() {
         let taskForm = `
         <div class="form-fields">
-            <h1 class="flex items-center justify-between">Task ${tasksAdded}
+            <h1 class="flex items-center justify-between">Task ${x}
                 <div class="delete-form-btn flex items-center justify-center bg-[#EAEDFF] text-[#FF5656] w-8 h-8 cursor-pointer rounded">
                     <i class="bx bx-trash-alt"></i>
                 </div>
@@ -113,7 +116,7 @@ $(document).ready(function (){
                 </div>
             </div>
         </div>`;
-        $(taskForm).insertBefore(".form-btns");
+        $(taskForm).insertBefore(".count");
         $(document).on("click",".delete-form-btn",(e)=>{
             e.target.closest(".form-fields").remove();
         });
@@ -228,7 +231,7 @@ $(document).ready(function (){
         });
     });
 
-    // search form // todo: complete the form logic search
+    // search form
     $(".search-form").keyup(()=>{
         let formValue = $("#search-field").val();
         if(formValue !== "") {
@@ -321,6 +324,8 @@ $(document).ready(function (){
 // get all tasks form the database using ajax
 function getAllTasks() {
     let task = "";
+    let todayDate = new Date();
+    // console.log(todayDate)
     $.ajax({ // eslint-disable-line jquery/no-ajax
         url: "http://localhost/task-board/public/home/getAllTasks",
         type: "get",
@@ -336,10 +341,14 @@ function getAllTasks() {
             let doneCount = 0;
             if(dataParsed.length > 0) {
                 dataParsed.forEach((element) => {
+                    // calculate date
+                    let a = new Date(element.date_end);
+                    const deadLine = a.getDate() - todayDate.getDate();
+                    let expired = a.getTime() < todayDate.getTime() ? "expired" : "";
                     task = `<div draggable="true" class="task-box border-2 border-solid border-primary w-full rounded bg-primary text-white" id="${element.task_id}" ondragstart="dragStart(event)" ondragend="dragEnd(event)">
                         <!-- task header -->
                         <div class="task-header flex items-center justify-between py-2 px-2 bg-fourth text-black text-xl md:text-base rounded-t-md">
-                            <h2 class="task-title">${element.task_title}</h2>
+                            <h2 class="task-title">${element.task_title}${element.task_status === "done" ? "<span class=\"text-green font-bold\"> :: Done</span>" : "<span class=\"text-red-800 font-bold\"> :: " + expired + "</span>"}</h2>
                             <div class="task-operations flex items-center gap-2">
                                 <!-- update button -->
                                 <button class="edit-btn flex items-center justify-center bg-[#EAEDFF] text-primary w-8 h-8 cursor-pointer rounded" type="button">
@@ -368,7 +377,7 @@ function getAllTasks() {
                                 </div>
                                 <!-- end date -->
                                 <div class="end-date">
-                                    <p>Due in ${element.date_end}</p>
+                                    <p>Due in ${element.date_end}${element.task_status === "done" ? "" : " / " + deadLine + " Days Left"}</p>
                                 </div>
                             </div>
                         </div>
