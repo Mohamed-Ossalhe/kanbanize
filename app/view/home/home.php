@@ -18,17 +18,17 @@
                         <!-- todo analytics -->
                         <div class="analytics-box flex items-center gap-4 md:gap-2 p-3 md:p-2 bg-fourth w-fit text-xl md:text-base rounded mr-4">
                             <p class="box-title capitalize">to do</p>
-                            <div class="analytics-number todo-count px-3 py-1 bg-third rounded"></div>
+                            <div class="analytics-number todo-count px-3 py-1 bg-third rounded">0</div>
                         </div>
                         <!-- inprogress analytics -->
                         <div class="analytics-box flex items-center gap-4 md:gap-2 p-3 md:p-2 bg-fourth w-fit text-xl md:text-base rounded mr-4">
                             <p class="box-title capitalize">in progress</p>
-                            <div class="analytics-number in-progress-count px-3 py-1 bg-third rounded">3</div>
+                            <div class="analytics-number in-progress-count px-3 py-1 bg-third rounded">0</div>
                         </div>
                         <!-- Done analytics -->
                         <div class="analytics-box flex items-center gap-4 md:gap-2 p-3 md:p-2 bg-fourth w-fit text-xl md:text-base rounded mr-4">
                             <p class="box-title capitalize">done</p>
-                            <div class="analytics-number done-count px-3 py-1 bg-third rounded">3</div>
+                            <div class="analytics-number done-count px-3 py-1 bg-third rounded">0</div>
                         </div>
                     </div>
                 </div>

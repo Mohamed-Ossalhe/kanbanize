@@ -33,6 +33,7 @@
         public function signUp() {
             // echo "heloo";
             if(!empty($_FILES["user_image"]) && !empty($_POST["user_name"]) && !empty($_POST["user_email"]) && !empty($_POST["user_password"]) && !empty($_POST["role"])) {
+                $this->model("User");
                 $imageName = $_FILES["user_image"]["name"];
                 $oldDir = $_FILES["user_image"]["tmp_name"];
                 $data = array(
@@ -42,11 +43,17 @@
                     "user-password" => password_hash($this->validateData($_POST["user_password"]), PASSWORD_DEFAULT),
                     "role" => $this->validateData($_POST["role"])
                 );
-                $newPath = ROOT. DIRECTORY_SEPARATOR . "public/assets/img/" . $imageName;
-                move_uploaded_file($oldDir, $newPath);
-                // var_dump($data);
-                $this->model("User");
-                $this->model->insertUser($data);
+                $user = $this->model->verifyUser($data);
+                if($user) {
+                    echo "Email Already Exists!";
+                }else {
+                    $newPath = ROOT. DIRECTORY_SEPARATOR . "public/assets/img/" . $imageName;
+                    move_uploaded_file($oldDir, $newPath);
+                    // var_dump($data);
+                    $this->model->insertUser($data);
+                }
+            }else {
+                echo "Please Fill All The Fields!";
             }
         }
         // log in
@@ -66,7 +73,7 @@
                     $_SESSION["user-id"] = $user["user_id"];
                     echo "user logged";
                 }else {
-                    echo "uncorrect email password";
+                    echo "uncorrect email or password";
                 }
             }else {
                 echo "Please Fill All The Fields!";
@@ -81,27 +88,43 @@
         // update user info
         public function updateUserInfo() {
             if(isUserLogged()) {
-                if(!empty($_FILES["user_image"]) && !empty($_POST["user_name"]) && !empty($_POST["user_email"]) && !empty($_POST["user_old_password"]) && !empty($_POST["user_new_password"])) {
-                    $imageName = $_FILES["user_image"]["name"];
-                    $oldDir = $_FILES["user_image"]["tmp_name"];
-                    $data = array(
-                        "user-image" => $imageName,
-                        "user-name" => $this->validateData($_POST["user_name"]),
-                        "user-email" => filter_var($this->validateData($_POST["user_email"]), FILTER_SANITIZE_EMAIL),
-                        "user-old-password" => $this->validateData($_POST["user_old_password"]),
-                        "user-password" => $this->validateData($_POST["user_new_password"])
-                    );
+                if(!empty($_POST["user_name"]) && !empty($_POST["user_email"]) && !empty($_POST["user_old_password"]) && !empty($_POST["user_new_password"])) {
+                    $data = array();
+                    if(!empty($_FILES["user_image"])) {
+                        $imageName = $_FILES["user_image"]["name"];
+                        $oldDir = $_FILES["user_image"]["tmp_name"];
+                        $data = array(
+                            "user-image" => $imageName,
+                            "user-name" => $this->validateData($_POST["user_name"]),
+                            "user-email" => filter_var($this->validateData($_POST["user_email"]), FILTER_SANITIZE_EMAIL),
+                            "user-old-password" => $this->validateData($_POST["user_old_password"]),
+                            "user-password" => password_hash($this->validateData($_POST["user_new_password"]), PASSWORD_DEFAULT),
+                            "user-id" => $_SESSION["user-id"]
+                        );
+                    }else {
+                        $data = array(
+                            "user-name" => $this->validateData($_POST["user_name"]),
+                            "user-email" => filter_var($this->validateData($_POST["user_email"]), FILTER_SANITIZE_EMAIL),
+                            "user-old-password" => $this->validateData($_POST["user_old_password"]),
+                            "user-password" => password_hash($this->validateData($_POST["user_new_password"]), PASSWORD_DEFAULT),
+                            "user-id" => $_SESSION["user-id"]
+                        );
+                    }
                     $this->model("User");
                     $user = $this->model->verifyUser($data);
-                    if(password_verify($data["user-old-password"], $user["user_password"])) {
-                        // TODO: complette the logic and updte user info
+                    if($user && password_verify($data["user-old-password"], $user["user_password"])) {
+                        $newPath = ROOT. DIRECTORY_SEPARATOR . "public/assets/img/" . $imageName;
+                        move_uploaded_file($oldDir, $newPath);
+                        // var_dump($data);
+                        $this->model->updateDataRow($data);
+                    }else {
+                        echo "Invalid Password";
                     }
-                    // $newPath = ROOT. DIRECTORY_SEPARATOR . "public/assets/img/" . $imageName;
-                    // move_uploaded_file($oldDir, $newPath);
-                    // // var_dump($data);
-                    // $this->model("User");
-                    // $this->model->insertUser($data);
+                }else {
+                    echo "Please Fill All Feilds!";
                 }
+            }else {
+                redirect("authentification");
             }
         }
         // validate inputs and remove special characters

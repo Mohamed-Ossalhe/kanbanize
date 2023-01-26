@@ -1,5 +1,6 @@
 $(document).ready(function () {
     // sign up form
+    // todo: finish the auth empty field func and add more security to it
     $(".sign-up").submit((e)=>{
         e.preventDefault();
         let userName = $("#sign-name").val();
@@ -7,28 +8,33 @@ $(document).ready(function () {
         let userPassword = $("#sign-password").val();
         let userImage = $("#image")[0].files;
         let role = 2;
-        let formData = new FormData();
-        formData.append("user_image",userImage[0]);
-        formData.append("user_name",userName);
-        formData.append("user_email",userEmail);
-        formData.append("user_password",userPassword);
-        formData.append("role",role);
-        $.ajax({ // eslint-disable-line jquery/no-ajax
-            url: "http://localhost/task-board/public/user/signUp",
-            type: "post",
-            data: formData,
-            contentType: false,
-            processData: false,
-            success: function(responce, status){
-                $("#sign-name").val("");
-                $("#sign-email").val("");
-                $("#sign-password").val("");
-                $("#image").val("");
-            },
-            error: function(error){
-                console.log(error);
-            }
-        });
+        if(userName && userEmail && userPassword && userImage) {
+            let formData = new FormData();
+            formData.append("user_image",userImage[0]);
+            formData.append("user_name",userName);
+            formData.append("user_email",userEmail);
+            formData.append("user_password",userPassword);
+            formData.append("role",role);
+            $.ajax({ // eslint-disable-line jquery/no-ajax
+                url: "http://localhost/task-board/public/user/signUp",
+                type: "post",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(responce){
+                    $("#sign-name").val("");
+                    $("#sign-email").val("");
+                    $("#sign-password").val("");
+                    $("#image").val("");
+                    $(".error").text(responce);
+                },
+                error: function(error){
+                    console.log(error);
+                }
+            });
+        }else {
+            // $(".error").text("Please Fill All The Fields!");
+        }
     });
 
     // log-in form
@@ -48,6 +54,7 @@ $(document).ready(function () {
                     // console.log(response);
                     location.assign("http://localhost/task-board/public/home/");
                 }
+                $(".log-in-error").text(response);
             },
             error: function(error) {
                 console.log(error);

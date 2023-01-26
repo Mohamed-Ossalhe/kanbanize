@@ -429,7 +429,7 @@ function dropTask(event) {
     if(status === "in-progress") status = "in progress";
     else if(status === "done") status = "done";
     else status = "to do";
-    console.log(status);
+    // console.log(status);
     let draggableTask = $(".task-box.draggable");
     if(draggableTask != null) {
         $.ajax({ // eslint-disable-line
