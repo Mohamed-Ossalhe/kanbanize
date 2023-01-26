@@ -4,7 +4,7 @@ $(document).ready(()=>{
         "email" : /^([a-z\d\.-]+)@([a-z\d-]+)\.([a-z]{2,8})(\.[a-z]{2,8})?$/, // eslint-disable-line
         "password": /^[\w@-]{8,20}$/,
         "phone_n": /^[0-9]{3}[0-9]{3}[0-9]{4}$/,
-        "name": /^[A-Za-z\d]{5,20}$/
+        "name": /^[A-Za-z\d ]{5,20}$/
     };
     function validateInput(field, regex){
         if(regex.test(field.value)) {

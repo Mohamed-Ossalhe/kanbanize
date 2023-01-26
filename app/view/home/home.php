@@ -70,6 +70,7 @@
                     </div>
                     <!-- task column wrapper -->
                     <div class="tasks-column-wrapper scrollbar-hide flex flex-col gap-2  max-h-[400px] overflow-y-scroll py-8" id="in-progress" ondrop="dropTask(event)" ondragover="dragOver(event)">
+                    
                     </div>
                 </div>
                 <!-- done column -->
