@@ -99,6 +99,7 @@
             </button>
             <div class="px-6 py-6 lg:px-8">
                 <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Add New Task</h3>
+                <p class="task-error"></p>
                 <form class="add-task-form space-y-6" method="post">
                     <div>
                         <label for="task-title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Task Title</label>
@@ -145,6 +146,7 @@
             </button>
             <div class="px-6 py-6 lg:px-8">
                 <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Add New Task</h3>
+                <p class="update-task-error"></p>
                 <form class="update-task-form space-y-6" method="post">
                     <div>
                         <label for="task-title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Task Title</label>
@@ -191,6 +193,7 @@
             </button>
             <div class="px-6 py-6 lg:px-8">
                 <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Add New Task</h3>
+                <p class="multi-task-error"></p>
                 <form class="add-tasks-form space-y-6 overflow-y-scroll scrollbar-hide" style="max-height: 500px;" method="post">
                     <div class="multiple-forms">
                         <!-- form 1 -->

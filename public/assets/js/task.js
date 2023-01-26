@@ -14,32 +14,37 @@ $(document).ready(function (){
         let taskDescValue = $("#task-description").val();
         let dueDateValue = $("#date-picker").val();
         // console.log(columnId);
-        // eslint-disable-next-line jquery/no-ajax
-        $.ajax({
-            url: "http://localhost/task-board/public/home/addTask",
-            type: "post",
-            data: {
-                task_title: taskTitleValue,
-                task_description: taskDescValue,
-                end_date: dueDateValue,
-                task_status: taskStatus
-            },
-            success: function (responce, status) {
-                console.log(status);
-                console.log(responce);
-                if(status === "success" && responce) {
-                    $("#task-title").val("");
-                    $("#task-description").val("");
-                    $("#lists").val("to do");
-                    $("#date-picker").val("");
-                    $(".tasks-column-wrapper").html("");
-                    getAllTasks();
+        if(taskTitleValue !== "" && taskDescValue !== "" && taskStatus !== "" && dueDateValue !== "") {
+            // eslint-disable-next-line jquery/no-ajax
+            $.ajax({
+                url: "http://localhost/task-board/public/home/addTask",
+                type: "post",
+                data: {
+                    task_title: taskTitleValue,
+                    task_description: taskDescValue,
+                    end_date: dueDateValue,
+                    task_status: taskStatus
+                },
+                success: function (responce, status) {
+                    console.log(status);
+                    console.log(responce);
+                    if(status === "success" && responce) {
+                        $("#task-title").val("");
+                        $("#task-description").val("");
+                        $("#lists").val("to do");
+                        $("#date-picker").val("");
+                        $(".tasks-column-wrapper").html("");
+                        getAllTasks();
+                    }
+                },
+                error: function (error) {
+                    console.log(error);
                 }
-            },
-            error: function (error) {
-                console.log(error);
-            }
-        });
+            });
+            $(".task-error").text("").css("color", "red");
+        }else {
+            $(".task-error").text("Please Fill All The Fields!").css("color", "red");
+        }
     });
 
     
