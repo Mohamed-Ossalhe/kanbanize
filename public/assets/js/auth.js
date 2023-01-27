@@ -1,3 +1,5 @@
+
+
 $(document).ready(function () {
     // sign up form
     // todo: finish the auth empty field func and add more security to it
@@ -21,12 +23,15 @@ $(document).ready(function () {
                 data: formData,
                 contentType: false,
                 processData: false,
-                success: function(responce){
-                    $("#sign-name").val("");
-                    $("#sign-email").val("");
-                    $("#sign-password").val("");
-                    $("#image").val("");
-                    $(".error").text(responce);
+                success: function(response, status){
+                    if(response === "success" && status === "success") {
+                        $("#sign-name").val("");
+                        $("#sign-email").val("");
+                        $("#sign-password").val("");
+                        $("#sign-password").val("");
+                        $("#image").val("");
+                    }
+                    $(".error").text(response);
                 },
                 error: function(error){
                     console.log(error);

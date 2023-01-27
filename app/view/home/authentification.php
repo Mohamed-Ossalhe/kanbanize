@@ -1,12 +1,12 @@
 <?php require 'includes/head.php'?>
 <div class="auth-page h-full bg-third">
     <div class="container mx-auto px-3 h-full">
-        <div class="authentification-wrapper flex items-center justify-center gap-y-4 h-full">
-            <div class="header flex flex-col justify-center gap-y-2">
-                <img class="h-6" src="<?=BASE_ASSETS_URL?>img/logo-main-color.svg" alt="Kanbanize">
-                <p class="text-sm">Organize and Manage Your Tasks easily</p>
+        <div class="authentification-wrapper flex items-center justify-between gap-y-4 h-full">
+            <div class="header hidden w-1/2 md:flex md:flex-col md:justify-center md:items-start md:gap-y-2">
+                <img class="h-12" src="<?=BASE_ASSETS_URL?>img/logo-main-color.svg" alt="Kanbanize">
+                <p class="text-2xl">Organize and Manage Your Tasks easily</p>
             </div>
-            <div class="form-wrapper w-full">
+            <div class="form-wrapper w-1/2">
                 <!-- sign up form -->
                 <div class="sign-up-form hidden">
                     <!-- Main modal -->

@@ -31,26 +31,35 @@
         }
         // Sign up
         public function signUp() {
+            $regexPatterns = array(
+                "email" => '/^([a-z\d\.-]+)@([a-z\d-]+)\.([a-z]{2,8})(\.[a-z]{2,8})?$/',
+                "password"=> '/^[\w@-]{8,20}$/',
+                "name" => '/^[A-Za-z\d ]{5,20}$/'
+            );
             // echo "heloo";
             if(!empty($_FILES["user_image"]) && !empty($_POST["user_name"]) && !empty($_POST["user_email"]) && !empty($_POST["user_password"]) && !empty($_POST["role"])) {
-                $this->model("User");
-                $imageName = $_FILES["user_image"]["name"];
-                $oldDir = $_FILES["user_image"]["tmp_name"];
-                $data = array(
-                    "user-image" => $imageName,
-                    "user-name" => $this->validateData($_POST["user_name"]),
-                    "user-email" => filter_var($this->validateData($_POST["user_email"]), FILTER_SANITIZE_EMAIL),
-                    "user-password" => password_hash($this->validateData($_POST["user_password"]), PASSWORD_DEFAULT),
-                    "role" => $this->validateData($_POST["role"])
-                );
-                $user = $this->model->verifyUser($data);
-                if($user) {
-                    echo "Email Already Exists!";
+                if(preg_match($regexPatterns["name"], $_POST["user_name"]) && preg_match($regexPatterns["email"], $_POST["user_email"]) && preg_match($regexPatterns["password"], $_POST["user_password"])) {
+                    $this->model("User");
+                    $imageName = $_FILES["user_image"]["name"];
+                    $oldDir = $_FILES["user_image"]["tmp_name"];
+                    $data = array(
+                        "user-image" => $imageName,
+                        "user-name" => $this->validateData($_POST["user_name"]),
+                        "user-email" => filter_var($this->validateData($_POST["user_email"]), FILTER_SANITIZE_EMAIL),
+                        "user-password" => password_hash($this->validateData($_POST["user_password"]), PASSWORD_DEFAULT),
+                        "role" => $this->validateData($_POST["role"])
+                    );
+                    $user = $this->model->verifyUser($data);
+                    if($user) {
+                        echo "Email Already Exists!";
+                    }else {
+                        $newPath = ROOT. DIRECTORY_SEPARATOR . "public/assets/img/" . $imageName;
+                        move_uploaded_file($oldDir, $newPath);
+                        $this->model->insertUser($data);
+                        echo "success";
+                    }
                 }else {
-                    $newPath = ROOT. DIRECTORY_SEPARATOR . "public/assets/img/" . $imageName;
-                    move_uploaded_file($oldDir, $newPath);
-                    // var_dump($data);
-                    $this->model->insertUser($data);
+                    echo "Please Enter Valid Informations";
                 }
             }else {
                 echo "Please Fill All The Fields!";
@@ -60,20 +69,28 @@
         public function logIn() {
             extract($_POST);
             if(!empty($_POST["user_email"]) && !empty($_POST["user_password"])) {
-                $data = array(
-                    "user-email" => filter_var($this->validateData($user_email), FILTER_SANITIZE_EMAIL),
-                    "user-password" => $this->validateData($user_password)
+                $regexPatterns = array(
+                    "email" => '/^([a-z\d\.-]+)@([a-z\d-]+)\.([a-z]{2,8})(\.[a-z]{2,8})?$/',
+                    "password"=> '/^[\w@-]{8,20}$/'
                 );
-                $this->model("User");
-                $user = $this->model->verifyUser($data);
-                if($user && password_verify($data["user-password"],$user["user_password"])) {
-                    $_SESSION["user-logged"] = true;
-                    $_SESSION["user-name"] = $user["user_name"];
-                    $_SESSION["user-email"] = $user["user_email"];
-                    $_SESSION["user-id"] = $user["user_id"];
-                    echo "user logged";
+                if(preg_match($regexPatterns["email"], $user_email) && preg_match($regexPatterns["password"], $user_password)) {
+                    $data = array(
+                        "user-email" => filter_var($this->validateData($user_email), FILTER_SANITIZE_EMAIL),
+                        "user-password" => $this->validateData($user_password)
+                    );
+                    $this->model("User");
+                    $user = $this->model->verifyUser($data);
+                    if($user && password_verify($data["user-password"],$user["user_password"])) {
+                        $_SESSION["user-logged"] = true;
+                        $_SESSION["user-name"] = $user["user_name"];
+                        $_SESSION["user-email"] = $user["user_email"];
+                        $_SESSION["user-id"] = $user["user_id"];
+                        echo "user logged";
+                    }else {
+                        echo "uncorrect email or password";
+                    }
                 }else {
-                    echo "uncorrect email or password";
+                    echo "Please Enter Valid Informations!";
                 }
             }else {
                 echo "Please Fill All The Fields!";
