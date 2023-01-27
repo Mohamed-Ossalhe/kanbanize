@@ -311,6 +311,10 @@ $(document).ready(function (){
                         $(".todo-count").text(todoCount);
                         $(".in-progress-count").text(doingCount);
                         $(".done-count").text(doneCount);
+                    }else {
+                        todoTasks.text("No Task Found!");
+                        doingTasks.text("No Task Found!");
+                        doneTasks.text("No Task Found!");
                     }
                     // console.log(task);
                 },
