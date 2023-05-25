@@ -11,8 +11,8 @@ define('SESSION_HELPER', ROOT . 'app' . DIRECTORY_SEPARATOR . 'helpers' . DIRECT
 define('DATA', ROOT . 'app' . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR);
 define('CORE', ROOT . 'app' . DIRECTORY_SEPARATOR . 'core' . DIRECTORY_SEPARATOR);
 define('CONTROLLER', ROOT . 'app' . DIRECTORY_SEPARATOR . 'controller' . DIRECTORY_SEPARATOR);
-define('BASE_URL','http://localhost/task-board/');
-define('BASE_ASSETS_URL','http://localhost/task-board/public/assets/');
+define('BASE_URL','http://localhost/kanbanize/');
+define('BASE_ASSETS_URL','http://localhost/kanbanize/public/assets/');
 $modules = [ROOT, APP, CORE, CONTROLLER, DATA, MODEL, HELPERS];
 require_once URL_HELPER;
 require_once SESSION_HELPER;

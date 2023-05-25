@@ -40,15 +40,15 @@ $(document).ready(()=>{
 
 function getUserInfo(data) {
     $.ajax({ // eslint-disable-line
-        url: "http://localhost/task-board/public/user/getUserInfo",
+        url: "http://localhost/kanbanize/public/user/getUserInfo",
         type: "get",
         success: (response) => {
             let dataParsed = $.parseJSON(response);
             // insert profile data into profile dom elements
             data.headerUserName.text(dataParsed.user_name);
             data.headerUserEmail.text(dataParsed.user_email);
-            data.headerImage.attr("src", "http://localhost/task-board/public/assets/img/" + dataParsed.user_image);
-            data.profileImage.attr("src", "http://localhost/task-board/public/assets/img/" + dataParsed.user_image);
+            data.headerImage.attr("src", "http://localhost/kanbanize/public/assets/img/" + dataParsed.user_image);
+            data.profileImage.attr("src", "http://localhost/kanbanize/public/assets/img/" + dataParsed.user_image);
             data.profileName.text(dataParsed.user_name);
             data.profileEmail.text(dataParsed.user_email);
             // insert profile data into form elements
@@ -76,7 +76,7 @@ function updateUserInfo(data) {
     formData.append("user_new_password",newPass);
     // console.log(image, name, email, oldPass, newPass);
     $.ajax({ // eslint-disable-line jquery/no-ajax
-        url: "http://localhost/task-board/public/user/updateUserInfo",
+        url: "http://localhost/kanbanize/public/user/updateUserInfo",
         type: "post",
         data: formData,
         contentType: false,

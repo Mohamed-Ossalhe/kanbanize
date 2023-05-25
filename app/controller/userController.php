@@ -9,6 +9,11 @@
             $this->view("home/profile", "User Profile | Kanbanize");
             $this->view->render();
         }
+        // archives :: user
+        public function archives() {
+            $this->view("home/archives", "Tasks Archives | kanbanize");
+            $this->view->render();
+        }
         // get user data
         public function getUserInfo() {
             if(isUserLogged()) {
@@ -57,6 +62,7 @@
                         move_uploaded_file($oldDir, $newPath);
                         $this->model->insertUser($data);
                         echo "success";
+                        // redirect("user/authentification");
                     }
                 }else {
                     echo "Please Enter Valid Informations";
@@ -86,6 +92,7 @@
                         $_SESSION["user-email"] = $user["user_email"];
                         $_SESSION["user-id"] = $user["user_id"];
                         echo "user logged";
+                        // redirect("/");
                     }else {
                         echo "uncorrect email or password";
                     }
