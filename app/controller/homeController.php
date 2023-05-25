@@ -134,6 +134,25 @@
             }
         }
 
+        // archives task
+        public function archiveTask() {
+            extract($_POST);
+            if(!empty($taskId) && !empty($userId)) {
+                $data = array(
+                    "task_id" => $taskId,
+                    "user_id" => $userId
+                );
+                $this->model('Archive');
+                $archive = $this->model->insertIntoDb($data);
+                if($archive):
+                    echo json_encode([
+                        "message" => "Task archived!",
+                        "taskId" => $taskId
+                    ]);
+                endif;
+            }
+        }
+
         // validate inputs and remove special characters
         public function validateData($data) {
             if(isset($data) and !empty($data)) {

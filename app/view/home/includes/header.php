@@ -47,9 +47,12 @@
                             <li>
                                 <a href="<?=BASE_URL?>public/user/profile" class="block px-4 py-2 hover:bg-gray-100">Profile</a>
                             </li>
+                            <li>
+                                <a href="<?=BASE_URL?>public/user/archives" class="block px-4 py-2 hover:bg-gray-100">Archives</a>
+                            </li>
                         </ul>
                         <div class="py-1">
-                            <a href="http://localhost/task-board/public/user/logOut" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sign out</a>
+                            <a href="user/logOut" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sign out</a>
                         </div>
                     </div>
                 </div>

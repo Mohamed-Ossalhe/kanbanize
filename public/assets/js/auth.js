@@ -2,7 +2,7 @@
 
 $(document).ready(function () {
     // sign up form
-    // todo: finish the auth empty field func and add more security to it
+    // * todo: finish the auth empty field func and add more security to it : Done
     $(".sign-up").submit((e)=>{
         e.preventDefault();
         let userName = $("#sign-name").val();
@@ -18,7 +18,7 @@ $(document).ready(function () {
             formData.append("user_password",userPassword);
             formData.append("role",role);
             $.ajax({ // eslint-disable-line jquery/no-ajax
-                url: "http://localhost/task-board/public/user/signUp",
+                url: "http://localhost/kanbanize/public/user/signUp",
                 type: "post",
                 data: formData,
                 contentType: false,
@@ -32,13 +32,14 @@ $(document).ready(function () {
                         $("#image").val("");
                     }
                     $(".error").text(response);
+                    location.assign("http://localhost/kanbanize/public/user/authentification");
                 },
                 error: function(error){
                     console.log(error);
                 }
             });
         }else {
-            // $(".error").text("Please Fill All The Fields!");
+            $(".error").text("Please Fill All The Fields!");
         }
     });
 
@@ -48,7 +49,7 @@ $(document).ready(function () {
         let userEmail = $("#log-email").val();
         let userPassword = $("#log-password").val();
         $.ajax({ // eslint-disable-line jquery/no-ajax
-            url: "http://localhost/task-board/public/user/logIn",
+            url: "http://localhost/kanbanize/public/user/logIn",
             type: "post",
             data: {
                 user_email: userEmail,
@@ -56,8 +57,7 @@ $(document).ready(function () {
             },
             success: function(response, status) {
                 if(response === "user logged" && status === "success") {
-                    // console.log(response);
-                    location.assign("http://localhost/task-board/public/home/");
+                    location.assign("http://localhost/kanbanize/public/home/");
                 }
                 $(".log-in-error").text(response);
             },

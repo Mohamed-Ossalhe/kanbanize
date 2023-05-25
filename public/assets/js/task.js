@@ -17,7 +17,7 @@ $(document).ready(function (){
         if(taskTitleValue !== "" && taskDescValue !== "" && taskStatus !== "" && dueDateValue !== "") {
             // eslint-disable-next-line jquery/no-ajax
             $.ajax({
-                url: "http://localhost/task-board/public/home/addTask",
+                url: "http://localhost/kanbanize/public/home/addTask",
                 type: "post",
                 data: {
                     task_title: taskTitleValue,
@@ -51,7 +51,7 @@ $(document).ready(function (){
     // get one task
     function getTask(taskId) {
         $.ajax({ // eslint-disable-line
-            url: "http://localhost/task-board/public/home/getTask",
+            url: "http://localhost/kanbanize/public/home/getTask",
             type: "post",
             data: {
                 task_id: taskId
@@ -147,7 +147,7 @@ $(document).ready(function (){
             taskDate.push($(this).val());
         });
         $.ajax({ // eslint-disable-line
-            url: "http://localhost/task-board/public/home/addMultipleTasks",
+            url: "http://localhost/kanbanize/public/home/addMultipleTasks",
             type: "post",
             data: {
                 task_title: taskTitles,
@@ -191,7 +191,7 @@ $(document).ready(function (){
             // console.log(columnId);
             // eslint-disable-next-line jquery/no-ajax
             $.ajax({
-                url: "http://localhost/task-board/public/home/updateTask",
+                url: "http://localhost/kanbanize/public/home/updateTask",
                 type: "post",
                 data: {
                     task_title: taskTitleValue,
@@ -220,7 +220,7 @@ $(document).ready(function (){
     $(document).on("click", ".delete-btn",function (e) {
         let taskId = parseInt(e.target.closest(".task-box").id);
         $.ajax({ // eslint-disable-line
-            url: "http://localhost/task-board/public/home/deleteTask",
+            url: "http://localhost/kanbanize/public/home/deleteTask",
             type: "post",
             data: {
                 task_id: taskId
@@ -236,13 +236,19 @@ $(document).ready(function (){
         });
     });
 
+    // archive task
+    $(document).on("click", ".archive-btn", function(){
+        let taskId = "";
+        return taskId;
+    });
+
     // search form
     $(".search-form").keyup(()=>{
         let formValue = $("#search-field").val();
         if(formValue !== "") {
             let task = "";
             $.ajax({ // eslint-disable-line jquery/no-ajax
-                url: "http://localhost/task-board/public/home/searchTasks",
+                url: "http://localhost/kanbanize/public/home/searchTasks",
                 type: "post",
                 data: {
                     "task_title": formValue
@@ -266,12 +272,16 @@ $(document).ready(function (){
                                     <h2 class="task-title">${element.task_title}</h2>
                                     <div class="task-operations flex items-center gap-2">
                                         <!-- update button -->
-                                        <button class="edit-btn flex items-center justify-center bg-[#EAEDFF] text-primary w-8 h-8 cursor-pointer rounded" type="button">
+                                        <button title="update" class="edit-btn flex items-center justify-center bg-[#EAEDFF] text-primary w-8 h-8 cursor-pointer rounded" type="button">
                                             <i class='bx bx-edit'></i>
                                         </button>
                                         <!-- delete button -->
-                                        <div class="delete-btn flex items-center justify-center bg-[#EAEDFF] text-[#FF5656] w-8 h-8 cursor-pointer rounded">
+                                        <div title="delete" class="delete-btn flex items-center justify-center bg-[#EAEDFF] text-[#FF5656] w-8 h-8 cursor-pointer rounded">
                                             <i class='bx bx-trash-alt'></i>
+                                        </div>
+                                        <!-- archive button -->
+                                        <div title="archive" class="archive-btn flex items-center justify-center bg-[#EAEDFF] text-[#ffbb56] w-8 h-8 cursor-pointer rounded">
+                                            <i class='bx bx-archive'></i>
                                         </div>
                                     </div>
                                 </div>
@@ -336,7 +346,7 @@ function getAllTasks() {
     let todayDate = new Date();
     // console.log(todayDate)
     $.ajax({ // eslint-disable-line jquery/no-ajax
-        url: "http://localhost/task-board/public/home/getAllTasks",
+        url: "http://localhost/kanbanize/public/home/getAllTasks",
         type: "get",
         success: (response) => {
             let dataParsed = $.parseJSON(response);
@@ -354,18 +364,22 @@ function getAllTasks() {
                     let a = new Date(element.date_end);
                     const deadLine = a.getDate() - todayDate.getDate();
                     let expired = a.getTime() < todayDate.getTime() ? "expired" : "";
-                    task = `<div draggable="true" class="task-box border-2 border-solid border-primary w-full rounded bg-primary text-white" id="${element.task_id}" ondragstart="dragStart(event)" ondragend="dragEnd(event)">
+                    task = `<div draggable="true" class="task-box border-2 border-solid border-primary w-full rounded bg-primary text-white cursor-move" id="${element.task_id}" ondragstart="dragStart(event)" ondragend="dragEnd(event)">
                         <!-- task header -->
                         <div class="task-header flex items-center justify-between py-2 px-2 bg-fourth text-black text-xl md:text-base rounded-t-md">
                             <h2 class="task-title">${element.task_title}${element.task_status === "done" ? "<span class=\"text-green font-bold\"> :: Done</span>" : "<span class=\"text-red-800 font-bold\"> :: " + expired + "</span>"}</h2>
                             <div class="task-operations flex items-center gap-2">
                                 <!-- update button -->
-                                <button class="edit-btn flex items-center justify-center bg-[#EAEDFF] text-primary w-8 h-8 cursor-pointer rounded" type="button">
+                                <button title="update" class="edit-btn flex items-center justify-center bg-[#EAEDFF] text-primary w-8 h-8 cursor-pointer rounded" type="button">
                                     <i class='bx bx-edit'></i>
                                 </button>
                                 <!-- delete button -->
-                                <div class="delete-btn flex items-center justify-center bg-[#EAEDFF] text-[#FF5656] w-8 h-8 cursor-pointer rounded">
+                                <div title="delete" class="delete-btn flex items-center justify-center bg-[#EAEDFF] text-[#FF5656] w-8 h-8 cursor-pointer rounded">
                                     <i class='bx bx-trash-alt'></i>
+                                </div>
+                                <!-- archive button -->
+                                <div title="archive" class="archive-btn flex items-center justify-center bg-[#EAEDFF] text-[#ffbb56] w-8 h-8 cursor-pointer rounded">
+                                    <i class='bx bx-archive'></i>
                                 </div>
                             </div>
                         </div>
@@ -442,7 +456,7 @@ function dropTask(event) {
     let draggableTask = $(".task-box.draggable");
     if(draggableTask != null) {
         $.ajax({ // eslint-disable-line
-            url: "http://localhost/task-board/public/home/updateTaskOnDrag",
+            url: "http://localhost/kanbanize/public/home/updateTaskOnDrag",
             type: "post",
             data: {
                 task_id: taskId,
